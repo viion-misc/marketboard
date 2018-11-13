@@ -2,6 +2,10 @@
 
 A concept website that shows FFXIV marketboard information using XIVAPI. Written in Basic Javascript.
 
+### Demo
+
+- https://viion.github.io/marketboard/index.html
+
 ### Dev Setup:
 
 - Install npm modules: `npm install`
