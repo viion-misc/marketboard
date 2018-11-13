@@ -1,9 +1,3 @@
-/**
- * Object.prototype.forEach() polyfill
- * https://gomakethings.com/looping-through-objects-with-es6/
- * @author Chris Ferdinandi
- * @license MIT
- */
 if (!Object.prototype.forEach) {
     Object.defineProperty(Object.prototype, 'forEach', {
         value: function (callback, thisArg) {
@@ -20,10 +14,6 @@ if (!Object.prototype.forEach) {
     });
 }
 
-
-/**
- * handle XIVAPI icons
- */
 function icon(string) {
     return `https://xivapi.com${string}`
 }
