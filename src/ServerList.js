@@ -41,6 +41,8 @@ class ServerList
     {
         let server = localStorage.getItem(this.localeStorageKey);
         server = server ? server : this.defaultServer;
+        localStorage.setItem(this.localeStorageKey, server);
+        console.log(`Server set to: ${server}`);
 
         // select it in the server list
         this.ui.val(server);
