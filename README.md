@@ -4,7 +4,7 @@ A concept website that shows FFXIV marketboard information using XIVAPI. Written
 
 ### Demo
 
-- https://viion.github.io/marketboard/index.html
+- https://viion.github.io/marketboard/
 
 ### Dev Setup:
 
