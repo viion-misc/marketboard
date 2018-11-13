@@ -4,9 +4,9 @@ class ServerList
 {
     constructor()
     {
-        this.storageKey = 'server';
+        this.localeStorageKey = 'server';
         this.defaultServer = 'Phoenix';
-        this.serverElement = $('.server-select-box');
+        this.ui = $('.server-select-box');
     }
 
     /**
@@ -24,7 +24,7 @@ class ServerList
                 });
 
                 // add options
-                this.serverElement.append(
+                this.ui.append(
                     `<optgroup label="${dataCenter}">${serverGroup.join('')}</optgroup>`
                 );
             });
@@ -39,11 +39,11 @@ class ServerList
      */
     setUserServer()
     {
-        let server = localStorage.getItem(this.storageKey);
+        let server = localStorage.getItem(this.localeStorageKey);
         server = server ? server : this.defaultServer;
 
         // select it in the server list
-        this.serverElement.val(server);
+        this.ui.val(server);
     }
 
     /**
@@ -51,9 +51,9 @@ class ServerList
      */
     watchForSelection()
     {
-        this.serverElement.on('change', event => {
+        this.ui.on('change', event => {
             const server = $(event.currentTarget).val();
-            localStorage.setItem(this.storageKey, server);
+            localStorage.setItem(this.localeStorageKey, server);
 
             // reload page
             location.reload();

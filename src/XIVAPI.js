@@ -53,6 +53,13 @@ class XIVAPI
     }
 
     /**
+     * Get Market Board search categories
+     */
+    getSearchCategories(callback) {
+        this.get('/market/categories', callback);
+    }
+
+    /**
      * Get a list of servers grouped by their data center
      */
     getServerList(callback) {

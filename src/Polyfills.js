@@ -19,3 +19,11 @@ if (!Object.prototype.forEach) {
         }
     });
 }
+
+
+/**
+ * handle XIVAPI icons
+ */
+function icon(string) {
+    return `https://xivapi.com${string}`
+}
