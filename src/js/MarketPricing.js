@@ -21,25 +21,28 @@ class MarketPricing
             // render info
             this.uiInfo.html(
                 `<img src="${Icon.get(response.Item.Icon)}">
-                 <h1 class="rarity-${response.Item.Rarity}">${response.Item.Name}</h1>
-                `
+                 <h1 class="rarity-${response.Item.Rarity}">${response.Item.Name}</h1>`
             );
 
             let html = [];
             html.push(`<tr><th width="25%">Total</th><th width="25%">Unit</th><th>Quantity</th><th>HQ</th><th>Town</th></tr>`);
 
             // render prices
-            response.Prices.forEach((price, i) => {
-                html.push(`
-                    <tr>
-                        <td>${numeral(price.PriceTotal).format('0,0')}</td>
-                        <td>${numeral(price.PricePerUnit).format('0,0')}</td>
-                        <td>${price.Quantity}</td>
-                        <td align="center">${price.IsHQ ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png" class="hq">' : ''}</td>
-                        <td align="right"><img src="${Icon.get(price.Town.Icon)}"></td>
-                    </tr>
-                `);
-            });
+            if (response.Prices.length > 0) {
+                response.Prices.forEach((price, i) => {
+                    html.push(`
+                        <tr>
+                            <td>${numeral(price.PriceTotal).format('0,0')}</td>
+                            <td>${numeral(price.PricePerUnit).format('0,0')}</td>
+                            <td>${price.Quantity}</td>
+                            <td align="center">${price.IsHQ ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png" class="hq">' : ''}</td>
+                            <td align="right"><img src="${Icon.get(price.Town.Icon)}"></td>
+                        </tr>
+                    `);
+                });
+            } else {
+                html.push(`<tr><td colspan="5">None for sale! Check back later</td></tr>`);
+            }
 
             this.uiPrices.append(`<table>${html.join('')}</table>`);
         });
