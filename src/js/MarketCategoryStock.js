@@ -22,7 +22,7 @@ class MarketCategoryStock
             response.forEach((stock, i) => {
                 this.ui.append(
                     `<button id="${stock.Item.ID}" class="rarity-${stock.Item.Rarity}">
-                        <img src="${Icon.get(stock.Item.Icon)}">
+                        <div><span><img src="https://xivapi.com/img-svg/loading.svg" class="lazy" data-src="${Icon.get(stock.Item.Icon)}"></span></div>
                         <div>${stock.Item.Name}</div>
                         <span>${stock.Quantity}</span> 
                     </button>`
@@ -30,7 +30,10 @@ class MarketCategoryStock
             });
 
             // watch for selection
-            this.watchForSelection()
+            this.watchForSelection();
+
+            // set lazy loading
+            new LazyLoad({ elements_selector: ".lazy" });
         });
     }
 
