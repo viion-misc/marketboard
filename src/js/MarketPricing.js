@@ -35,7 +35,7 @@ class MarketPricing
                         <td>${numeral(price.PriceTotal).format('0,0')}</td>
                         <td>${numeral(price.PricePerUnit).format('0,0')}</td>
                         <td>${price.Quantity}</td>
-                        <td align="center">${price.IsHQ ? '<img src="/hq.png" class="hq">' : ''}</td>
+                        <td align="center">${price.IsHQ ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png" class="hq">' : ''}</td>
                         <td align="right"><img src="${Icon.get(price.Town.Icon)}"></td>
                     </tr>
                 `);
@@ -63,7 +63,7 @@ class MarketPricing
                         <td>${numeral(price.PriceTotal).format('0,0')}</td>
                         <td>${numeral(price.PricePerUnit).format('0,0')}</td>
                         <td>${price.Quantity}</td>
-                        <td align="center">${price.IsHQ ? '<img src="/hq.png" class="hq">' : ''}</td>
+                        <td align="center">${price.IsHQ ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png" class="hq">' : ''}</td>
                         <td align="right">${moment.unix(price.PurchaseDate).fromNow()}</td>
                     </tr>
                 `);
