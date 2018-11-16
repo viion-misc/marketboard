@@ -1,3 +1,5 @@
+import '../scss/App.scss';
+
 import Polyfills from './Polyfills';
 import ServerList from './ServerList';
 import MarketCategories from './MarketCategories';

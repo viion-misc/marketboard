@@ -8,41 +8,62 @@
             gtag('js', new Date());
             gtag('config', 'UA-125096878-2');
         </script>
-        <title>Market Board</title>
-        <link rel="stylesheet" href="app.css">
+
+        <title>MOGBOARD</title>
+        <link rel="shortcut icon" type="image/png" href="/favicon.png">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     </head>
     <body>
-        <div class="container-fluid">
-            <!-- Server box -->
-            <select class="server-select-box"></select>
+        <main>
+            <nav>
 
-            <hr>
+                <div class="logo">
+                    <img src="mog.png">
+                    <h1><span>MOG</span>BOARD</h1>
+                </div>
 
-            <!-- Search -->
-            <input type="search" placeholder="Search">
+                <!-- Server box -->
+                <div class="server">
+                    <select class="server-select-box"></select>
+                </div>
 
-            <hr>
+                <!-- Search -->
+                <!-- hr -->
+                <!-- <input type="search" placeholder="Search"> -->
 
-            <!-- Market Categories -->
-            <div class="market-categories"></div>
+                <hr>
 
-            <hr>
+                <!-- Market Categories -->
+                <div class="market-categories"></div>
 
-            <!-- Market Stock Listing (Item+Quantity) -->
-            <div class="market-category-stock"></div>
+                <footer>
+                    copyright
+                </footer>
 
+            </nav>
+            <section>
 
-            <hr>
+                <div>
+                    <!-- Market Stock Listing (Item+Quantity) -->
+                    <div class="market-category-stock"></div>
+                </div>
+                <div>
+                    <!-- Item Info -->
+                    <div class="item-info"></div>
 
-            <!-- Market Prices for selected item -->
-            <div class="market-item-prices"></div>
+                    <!-- Market Prices for selected item -->
+                    <div class="market-item-prices"></div>
 
-            <!-- Market Price History for selected item -->
-            <div class="market-item-history"></div>
+                    <!-- Market Price History for selected item -->
+                    <div class="market-item-history"></div>
+                </div>
 
-        </div>
+            </section>
+        </main>
 
-        <script src="app.js"></script>
+        <script src="./app.js"></script>
     </body>
 </html>

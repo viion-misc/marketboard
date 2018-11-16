@@ -1,5 +1,6 @@
 import XIVAPI from './XIVAPI';
 import MarketCategoryStock from './MarketCategoryStock';
+import Icon from './Icon';
 
 class MarketCategories
 {
@@ -29,7 +30,10 @@ class MarketCategories
                 let html = [];
 
                 categories.forEach((category, i) => {
-                     html.push(`<button id="${category.ID}">${category.Name}</button>`);
+                     html.push(`<button id="${category.ID}">
+                        <img src="${Icon.get(category.Icon)}"><span>${category.Name}</span>
+                        </button>
+                    `);
                 });
 
                 this.ui.append(
@@ -46,6 +50,9 @@ class MarketCategories
     {
         this.ui.on('click', 'button', event => {
             const categoryItem = $(event.currentTarget).attr('id');
+
+            // move to top
+            window.scrollTo(0,0);
 
             // load market stock for this category
             MarketCategoryStock.listCategoryStock(categoryItem);

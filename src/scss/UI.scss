@@ -1,0 +1,280 @@
+html {
+    font-family: 'Roboto', sans-serif;
+    background-color: #000;
+
+    background-image: url("/bg.jpg");
+    background-size: cover;
+    background-position: center center;
+
+    color: #ccc;
+    font-size: 16px;
+}
+//
+// Layout
+//
+main {
+    display: flex;
+}
+nav {
+    position: relative;
+    z-index: 50;
+
+    background-color: #333;
+    flex: 0 1 300px;
+    padding-bottom: 100px;
+    border-right: solid 1px #000;
+    box-shadow: 1px 0 5px #000;
+
+    hr {
+        background-color: #000;
+        height: 1px;
+        margin: 0;
+        border: none;
+    }
+
+    button {
+        width: 100%;
+        display: flex;
+        background-color: transparent;
+        border: none;
+        padding: 10px;
+        color: #fff;
+        text-align: left;
+        border-bottom: solid 1px #000;
+        font-size: 16px;
+        text-shadow: 0 1px 2px #000;
+        transition: .1s;
+        line-height: 24px;
+
+        &:hover, &:focus, &:active {
+            background-color: #007bff;
+            cursor: pointer;
+        }
+
+        img {
+            flex: 0 1 auto;
+            vertical-align: middle;
+            margin: 2px 10px 0 10px;
+        }
+
+        span {
+            flex: 0 1 auto;
+        }
+    }
+
+    .logo {
+        text-align: center;
+        padding: 20px 0;
+
+        img {
+            height: 80px;
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+            color: #fff;
+
+            span {
+                color: yellow;
+            }
+        }
+    }
+
+    .server {
+        text-align: center;
+        padding: 0 0 20px 0;
+    }
+}
+section {
+    display: flex;
+    flex: 0 1 calc(100% - 300px);
+
+    > div:first-of-type {
+        background-color: #181818;
+        flex: 0 1 500px;
+        padding: 20px 0;
+    }
+
+    > div:last-of-type {
+        background-color: #080808;
+        flex: 0 1 600px;
+    }
+
+    .market-category-stock {
+        button {
+            width: 100%;
+            display: flex;
+            line-height: 50px;
+            border: none;
+            border-bottom: solid 1px #000;
+            color: #fff;
+            background-color: transparent;
+            text-align: left;
+            padding: 0 20px;
+            font-size: 18px;
+            transition: .1s;
+
+            img {
+                flex: 0 1 40px;
+                margin: 5px 0 0 0;
+            }
+
+            div {
+                flex: 0 1 calc(100% - 100px);
+                padding-left: 10px;
+            }
+
+            span {
+                font-size: 20px;
+                flex: 0 1 60px;
+                text-align: right;
+                color: #fffba7;
+            }
+
+            &.rarity-2 {
+                color: #89ffbc;
+            }
+
+            &.rarity-3 {
+                color: #3dafff;
+            }
+
+            &.rarity-4 {
+                color: #f44bff;
+            }
+
+            &.rarity-7 {
+                color: #ff7e85;
+            }
+
+            &:hover, &:focus, &:active {
+                background-color: #181818;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .item-info {
+        padding: 30px 0 10px 30px;
+        display: flex;
+
+        img {
+            flex: 0 1 40px;
+        }
+
+        h1 {
+            flex: 0 1 calc(100% - 40px);
+            padding-left: 20px;
+            font-size: 24px;
+            font-weight: 300;
+            color: #fff;
+            margin: 8px 0 0 0;
+
+            &.rarity-2 {
+                color: #89ffbc;
+            }
+
+            &.rarity-3 {
+                color: #3dafff;
+            }
+
+            &.rarity-4 {
+                color: #f44bff;
+            }
+
+            &.rarity-7 {
+                color: #ff7e85;
+            }
+        }
+    }
+
+    .market-item-prices,
+    .market-item-history {
+        padding: 20px;
+
+        h2 {
+            font-size: 18px;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+            padding: 10px;
+        }
+    }
+}
+footer {
+    font-size: 12px;
+    color: #555;
+    text-align: center;
+    padding: 20px;
+}
+table {
+    width: 100%;
+    background-color: #222;
+    border-radius: 6px;
+    overflow: hidden;
+
+    td {
+        padding: 12px;
+        border-right: solid 2px #000;
+
+        &:last-of-type {
+            border-right: none;
+        }
+
+        &:nth-of-type(1) {
+            color: yellow;
+        }
+
+        &:nth-of-type(2) {
+            font-weight: 600;
+        }
+
+        img {
+            margin: -8px 0;
+
+            &.hq {
+                margin: 4px 0 0 0;
+            }
+        }
+    }
+
+    tr {
+        border-bottom: solid 2px #000;
+    }
+
+    th {
+        position: relative;
+        z-index: 5;
+        padding: 12px;
+        text-align: left;
+        font-size: 13px;
+        text-transform: uppercase;
+        box-shadow: 0 1px 2px #000;
+        background-color: #181818;
+        color: #3dafff;
+        font-weight: 600;
+    }
+}
+//
+// Forms
+//
+select {
+    border: solid 1px #000;
+    padding: 8px;
+    color: #222;
+    background-color: #eee;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px #000;
+    cursor: pointer;
+}
+//
+// Misc
+//
+.loading {
+    padding: 30px;
+    text-align: center;
+    font-size: 24px;
+    color: #555;
+}

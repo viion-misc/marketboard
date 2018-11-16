@@ -13,7 +13,3 @@ if (!Object.prototype.forEach) {
         }
     });
 }
-
-function icon(string) {
-    return `https://xivapi.com${string}`
-}

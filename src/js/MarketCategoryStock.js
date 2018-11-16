@@ -1,5 +1,6 @@
 import XIVAPI from './XIVAPI';
 import MarketPricing from './MarketPricing';
+import Icon from './Icon';
 
 class MarketCategoryStock
 {
@@ -12,7 +13,7 @@ class MarketCategoryStock
     {
         const server = localStorage.getItem('server');
 
-        this.ui.html('<p>loading...</p>');
+        this.ui.html('<div class="loading">loading</div>');
 
         XIVAPI.getCategoryListings(categoryId, server, response => {
             this.ui.html('');
@@ -20,7 +21,11 @@ class MarketCategoryStock
             // render stock
             response.forEach((stock, i) => {
                 this.ui.append(
-                    `<button id="${stock.Item.ID}">(${stock.Quantity}) ${stock.Item.Name}</button>`
+                    `<button id="${stock.Item.ID}" class="rarity-${stock.Item.Rarity}">
+                        <img src="${Icon.get(stock.Item.Icon)}">
+                        <div>${stock.Item.Name}</div>
+                        <span>${stock.Quantity}</span> 
+                    </button>`
                 );
             });
 
@@ -33,6 +38,9 @@ class MarketCategoryStock
     {
         this.ui.on('click', 'button', event => {
             const itemId = $(event.currentTarget).attr('id');
+
+            // move to top
+            window.scrollTo(0,0);
 
             MarketPricing.renderPrices(itemId);
             MarketPricing.renderHistory(itemId);

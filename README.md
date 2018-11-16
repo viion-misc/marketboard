@@ -8,13 +8,8 @@ A concept website that shows FFXIV marketboard information using XIVAPI. Written
 
 ### Dev Setup:
 
-- Install npm modules: `npm install`
-- Install a live server `npm install -g live-server`
-- cd into `/web` and run `live-server`
-- To compile js run: `webpack` (you can also do `webpack --watch`)
-
-> If you add a new js file, you'll likely need to restart `webpack --watch`
-
-### Live setup:
-
-- Copy everything in `/web` up
+- Install Live Server: `npm i -g live-server`
+- Install Webpack 4
+- Run Webpack Watcher: `webpack --watch --mode development`
+- Run Live Server: `live-server`
+- Go to: http://127.0.0.1:8080/

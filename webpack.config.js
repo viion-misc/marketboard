@@ -1,34 +1,38 @@
-const webpack = require('webpack');
+/* === dont forget to import scss to main.js file === */
+/* ===> import './main.scss'; <=== */
 
-/**
- * WebPack Configuration
- */
+var path = require("path");
+
 module.exports = {
-    entry: {
-        app: './src/App.js',
-    },
+    entry: "./src/js/App.js",
     output: {
-        filename: '[name].js',
-        path: __dirname + '/',
-        libraryTarget: 'var',
-        library: 'App'
+        path: __dirname,
+        filename: "app.js",
+        publicPath: "/"
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015']
+                use: {
+                    loader: "babel-loader",
+                    options: { presets: ["es2015"] }
                 }
             },
-        ],
-    },
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin(),
-    ],
-    resolve: {
-        extensions: ['.js'],
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: "style-loader" // creates style nodes from JS strings
+                    },
+                    {
+                        loader: "css-loader" // translates CSS into CommonJS
+                    },
+                    {
+                        loader: "sass-loader" // compiles Sass to CSS
+                    }
+                ]
+            }
+        ]
     }
 };
