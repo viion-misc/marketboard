@@ -37,7 +37,7 @@ class MarketCategories
                 });
 
                 this.ui.append(
-                    `<div>${html.join('')}</div><br>`
+                    `<div>${html.join('')}</div>`
                 );
             });
 

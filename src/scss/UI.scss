@@ -88,6 +88,16 @@ nav {
         text-align: center;
         padding: 0 0 20px 0;
     }
+
+    .market-categories {
+        div {
+            border-bottom: solid 10px #000;
+        }
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
 }
 section {
     display: flex;
@@ -101,7 +111,7 @@ section {
 
     > div:last-of-type {
         background-color: #080808;
-        flex: 0 1 600px;
+        flex: 0 1 680px;
     }
 
     .market-category-stock {
