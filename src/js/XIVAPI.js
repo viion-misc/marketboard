@@ -13,12 +13,13 @@ class XIVAPI
         let params = {
             indexes: 'item',
             filters: 'ItemSearchCategory.ID>=1',
-            columns: 'ID,Icon,Name,Rarity,ItemSearchCategory.Name,ItemKind.Name',
-            string:  string.trim()
+            columns: 'ID,Icon,Name,LevelItem,Rarity,ItemSearchCategory.Name,ItemSearchCategory.ID,ItemKind.Name',
+            string:  string.trim(),
+            limit:   50,
         };
 
         let query = Object.keys(params)
-            .map(k => esc(k) + '=' + encodeURIComponent(params[k]))
+            .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
             .join('&');
 
         this.get(`/search?${query}`, callback);

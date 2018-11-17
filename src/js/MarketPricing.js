@@ -5,24 +5,21 @@ class MarketPricing
 {
     constructor()
     {
+        this.view      = $('.item-market-ui');
         this.uiInfo    = $('.item-info');
         this.uiPrices  = $('.market-item-prices');
         this.uiHistory = $('.market-item-history');
     }
 
-    renderPrices(itemId)
+    renderPrices(itemId, callback)
     {
         const server = localStorage.getItem('server');
+
+        this.view.addClass('on');
         this.uiPrices.html('<div class="loading">loading</div>');
 
         XIVAPI.getItemPrices(itemId, server, response => {
             this.uiPrices.html('<h2>Current Prices</h2>');
-
-            // render info
-            this.uiInfo.html(
-                `<img src="${Icon.get(response.Item.Icon)}">
-                 <h1 class="rarity-${response.Item.Rarity}">${response.Item.Name}</h1>`
-            );
 
             let html = [];
             html.push(`<tr><th width="25%">Total</th><th width="25%">Unit</th><th>Quantity</th><th>HQ</th><th>Town</th></tr>`);
@@ -45,6 +42,34 @@ class MarketPricing
             }
 
             this.uiPrices.append(`<table>${html.join('')}</table>`);
+
+            if (typeof callback !== 'undefined') {
+                callback();
+            }
+        });
+
+        // render item info
+        XIVAPI.getItem(itemId, item => {
+            let html = [];
+
+            // todo - wtb template engine..
+            html.push(`<img src="${Icon.get(item.Icon2x)}">`);
+            html.push(`<div>`);
+            html.push(`<h1 class="rarity-${item.Rarity}">${item.Name}</h1>`);
+            if (item.ClassJobCategory) {
+                html.push(`
+                    <p>Item Level: ${item.LevelItem} - Level ${item.LevelEquip} ${item.ClassJobCategory.Name}</p>
+                    <p>${item.ItemUICategory.Name} - ${item.ItemKind.Name}</p>
+                `);
+            } else {
+                html.push(`
+                    <p>${item.ItemSearchCategory.Name} - ${item.ItemKind.Name}</p>
+                `);
+            }
+            html.push('</div>');
+
+            // render info
+            this.uiInfo.html(html.join(''));
         });
     }
 

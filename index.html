@@ -31,10 +31,6 @@
                     <select class="server-select-box"></select>
                 </div>
 
-                <!-- Search -->
-                <!-- hr -->
-                <!-- <input type="search" placeholder="Search"> -->
-
                 <hr>
 
                 <!-- Market Categories -->
@@ -55,19 +51,66 @@
             </nav>
             <section>
 
-                <div>
-                    <!-- Market Stock Listing (Item+Quantity) -->
-                    <div class="market-category-stock"></div>
+                <!-- Search -->
+                <!-- hr -->
+                <div class="search">
+                    <input type="search" placeholder="Search">
+                    <div class="search-results"></div>
                 </div>
-                <div>
-                    <!-- Item Info -->
-                    <div class="item-info"></div>
 
-                    <!-- Market Prices for selected item -->
-                    <div class="market-item-prices"></div>
+                <div class="home on">
+                    <h1>Welcome to MogBoard!</h1>
+                    <p>
+                        <strong>MogBoard</strong> is a small one page site that provides
+                        real-time access to the FFXIV Market Board for any server**,
+                        any time. The page is fully open source and uses XIVAPI.com to
+                        interact with the Companion API.
+                    </p>
+                    <p>
+                        If you are interested in using Market Board information on your site, please
+                        have a look at the docs here:
+                        <a href="https://xivapi.com/docs/Market" target="_blank">XIVAPI Market</a>
+                    </p>
+                    <p>
+                        If you fancy messing with this page and hosting your own, you can find
+                        the source code here:
+                        <a href="https://github.com/viion/marketboard" target="_blank">Github: viion/marketboard</a>
+                    </p>
 
-                    <!-- Market Price History for selected item -->
-                    <div class="market-item-history"></div>
+                    <br><br>
+
+                    <p>
+                        <small>ALL FINAL FANTASY XIV CONTENT IS PROPERTY OF SQUARE ENIX CO., LTD</small>
+                    </p>
+
+                    <hr>
+
+                    <p>** Unfortunately, due to server congestions the following servers will not work:</p>
+                    <ul>
+                        <li>[NA] Balmung</li>
+                        <li>[JP] Gungnir</li>
+                        <li>[JP] Bahamut</li>
+                        <li>[JP] Chocobo</li>
+                        <li>[JP] Mandragora</li>
+                        <li>[JP] Shinryu</li>
+                    </ul>
+                </div>
+
+                <div class="content">
+                    <div class="market-category-stock-ui">
+                        <!-- Market Stock Listing (Item+Quantity) -->
+                        <div class="market-category-stock"></div>
+                    </div>
+                    <div class="item-market-ui">
+                        <!-- Item Info -->
+                        <div class="item-info"></div>
+
+                        <!-- Market Prices for selected item -->
+                        <div class="market-item-prices"></div>
+
+                        <!-- Market Price History for selected item -->
+                        <div class="market-item-history"></div>
+                    </div>
                 </div>
 
             </section>

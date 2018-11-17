@@ -47,9 +47,10 @@ nav {
         text-shadow: 0 1px 2px #000;
         transition: .1s;
         line-height: 24px;
+        outline: none;
 
-        &:hover, &:focus, &:active {
-            background-color: #007bff;
+        &:hover, &:focus, &:active, &.on {
+            background-color: #113d63;
             cursor: pointer;
         }
 
@@ -99,18 +100,177 @@ nav {
     }
 }
 section {
-    display: flex;
     flex: 0 1 calc(100% - 300px);
 
-    > div:first-of-type {
-        background-color: #181818;
-        flex: 0 1 500px;
-        padding: 20px 0;
+    .search {
+        position: relative;
+        z-index: 30;
+        box-shadow: 0 1px 3px #000;
+        background-color: #333;
+        width: 500px + 660px;
+        padding: 10px;
+        border-radius: 0 0 6px 0;
+
+        input {
+            width: 100%;
+            font-size: 20px;
+            font-weight: 300;
+            color: #f8ffb7;
+            outline: none;
+            line-height: 48px;
+            padding: 0 15px;
+            border: solid 1px #000;
+            box-shadow: 0 1px 5px #222;
+            border-radius: 3px;
+            background-color: #515151;
+        }
     }
 
-    > div:last-of-type {
-        background-color: #080808;
-        flex: 0 1 680px;
+    .search-results {
+        margin: 0 -10px;
+        display: none;
+
+        &.on {
+            display: block;
+        }
+
+        .search-results-info {
+            padding: 10px;
+            color: #fff;
+            font-weight: 400;
+            font-size: 16px;
+        }
+
+        button {
+            position: relative;
+            width: 100%;
+            display: flex;
+            background-color: #181818;
+            border: none;
+            padding: 10px;
+            color: #fff;
+            text-align: left;
+            border-bottom: solid 1px #000;
+            font-size: 16px;
+            text-shadow: 0 1px 2px #000;
+            transition: .1s;
+            line-height: 24px;
+            outline: none;
+
+            &:hover, &:focus, &:active, &.on {
+                background-color: #113d63;
+                cursor: pointer;
+            }
+
+            &.rarity-2 {
+                color: #89ffbc;
+            }
+
+            &.rarity-3 {
+                color: #3dafff;
+            }
+
+            &.rarity-4 {
+                color: #f44bff;
+            }
+
+            &.rarity-7 {
+                color: #ff7e85;
+            }
+
+            img {
+                flex: 0 1 auto;
+                vertical-align: middle;
+                margin: 0 10px 0 10px;
+                height: 24px;
+                width: 24px;
+                border-radius: 5px;
+            }
+
+            span {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                color: #888;
+                text-transform: uppercase;
+                font-size: 12px;
+            }
+
+            em {
+                color: yellow;
+                display: inline-block;
+                padding: 0 10px 0 0;
+            }
+        }
+    }
+
+    .home {
+        box-shadow: 0 1px 3px #000;
+        background-color: #151515;
+        width: 500px + 580px;
+        padding: 60px 50px 50px 50px;
+        border-radius: 0 0 6px 0;
+        margin-top: -10px;
+        display: none;
+        font-size: 18px;
+        line-height: 24px;
+
+        &.on {
+            display: block;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 50px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        hr {
+            height: 5px;
+            background-color: #1f527a;
+            border: none;
+            margin: 30px 0;
+        }
+
+        small {
+            font-size: 14px;
+            color: #666;
+        }
+    }
+
+    > div.content {
+        display: flex;
+
+        > .market-category-stock-ui {
+            background-color: #181818;
+            border: solid 1px #000;
+            border-radius: 0 0 5px 0;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.3);
+            flex: 0 1 500px;
+            padding: 10px 0;
+            display: none;
+
+            &.on {
+                display: block;
+            }
+        }
+
+        > .item-market-ui {
+            background-color: #080808;
+            border: solid 1px #000;
+            border-radius: 0 0 5px 0;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.3);
+            flex: 0 1 680px;
+            display: none;
+
+            &.on {
+                display: block;
+            }
+        }
     }
 
     .market-category-stock {
@@ -126,8 +286,11 @@ section {
             padding: 0 20px;
             font-size: 18px;
             transition: .1s;
+            outline: none;
 
-
+            &:nth-child(even) {
+                background-color: #222;
+            }
 
             div:first-of-type {
                 flex: 0 1 40px;
@@ -181,8 +344,8 @@ section {
                 color: #ff7e85;
             }
 
-            &:hover, &:focus, &:active {
-                background-color: #181818;
+            &:hover, &:focus, &:active, &.on {
+                background-color: #113d63;
                 cursor: pointer;
             }
         }
@@ -194,15 +357,26 @@ section {
 
         img {
             flex: 0 1 40px;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px #000;
+        }
+
+        div {
+            flex: 0 1 calc(100% - 40px);
+            padding-left: 20px;
+        }
+
+        p {
+            margin-bottom: 5px;
         }
 
         h1 {
-            flex: 0 1 calc(100% - 40px);
-            padding-left: 20px;
             font-size: 24px;
             font-weight: 300;
             color: #fff;
-            margin: 8px 0 0 0;
+            margin: 0 0 5px 0;
 
             &.rarity-2 {
                 color: #89ffbc;

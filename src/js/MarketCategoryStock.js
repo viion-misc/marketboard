@@ -6,13 +6,15 @@ class MarketCategoryStock
 {
     constructor()
     {
+        this.view = $('.market-category-stock-ui');
         this.ui = $('.market-category-stock');
     }
 
-    listCategoryStock(categoryId)
+    listCategoryStock(categoryId, callback)
     {
         const server = localStorage.getItem('server');
 
+        this.view.addClass('on');
         this.ui.html('<div class="loading">loading</div>');
 
         XIVAPI.getCategoryListings(categoryId, server, response => {
@@ -22,7 +24,7 @@ class MarketCategoryStock
             response.forEach((stock, i) => {
                 this.ui.append(
                     `<button id="${stock.Item.ID}" class="rarity-${stock.Item.Rarity}">
-                        <div><span><img src="https://xivapi.com/img-svg/loading.svg" class="lazy" data-src="${Icon.get(stock.Item.Icon)}"></span></div>
+                        <div><span><img src="https://xivapi.com/img-svg/loading.svg" class="lazy" data-src="${Icon.get(stock.Item.Icon2x ? stock.Item.Icon2x : stock.Item.Icon)}"></span></div>
                         <div>${stock.Item.Name}</div>
                         <span>${stock.Quantity}</span> 
                     </button>`
@@ -34,6 +36,10 @@ class MarketCategoryStock
 
             // set lazy loading
             new LazyLoad({ elements_selector: ".lazy" });
+
+            if (typeof callback !== 'undefined') {
+                callback();
+            }
         });
     }
 

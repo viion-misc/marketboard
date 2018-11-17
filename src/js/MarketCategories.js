@@ -7,6 +7,7 @@ class MarketCategories
     constructor()
     {
         this.ui = $('.market-categories');
+        this.home = $('.home');
     }
 
     render()
@@ -51,11 +52,18 @@ class MarketCategories
         this.ui.on('click', 'button', event => {
             const categoryItem = $(event.currentTarget).attr('id');
 
+            // hide "home"
+            this.home.removeClass('on');
+
             // move to top
             window.scrollTo(0,0);
 
             // load market stock for this category
             MarketCategoryStock.listCategoryStock(categoryItem);
+
+            // add visual "on"
+            this.ui.find('button.on').removeClass('on');
+            $(event.currentTarget).addClass('on');
         });
     }
 }
