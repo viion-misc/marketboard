@@ -102,7 +102,7 @@ class MarketPricing
             let html = [];
 
             // todo - wtb template engine..
-            html.push(`<img src="${Icon.get(item.Icon2x)}">`);
+            html.push(`<img src="${Icon.get(item.Icon)}">`);
             html.push(`<div>`);
             html.push(`<h1 class="rarity-${item.Rarity}">${item.Name}</h1>`);
             html.push(`<p>${item.Description}</p>`);

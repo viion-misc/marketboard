@@ -24,7 +24,7 @@ class MarketCategoryStock
             response.forEach((stock, i) => {
                 this.ui.append(
                     `<button id="${stock.Item.ID}" class="rarity-${stock.Item.Rarity}">
-                        <div><span><img src="http://xivapi.com/mb/loading.svg" class="lazy" data-src="${Icon.get(stock.Item.Icon2x ? stock.Item.Icon2x : stock.Item.Icon)}"></span></div>
+                        <div><span><img src="http://xivapi.com/mb/loading.svg" class="lazy" data-src="${Icon.get(stock.Item.Icon)}"></span></div>
                         <div>${stock.Item.Name}</div>
                         <span>${stock.Quantity}</span> 
                     </button>`
