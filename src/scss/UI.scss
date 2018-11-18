@@ -215,8 +215,29 @@ section {
         font-size: 18px;
         line-height: 24px;
 
+        .beta {
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #262626;
+
+            h4 {
+                font-size: 26px;
+                font-weight: 300;
+                margin-bottom: 15px;
+            }
+        }
+
         &.on {
-            display: block;
+            display: flex;
+        }
+
+        > div:first-of-type {
+            flex: 0 1 calc(100% - 350px);
+            padding-right: 50px;
+        }
+
+        > div:last-of-type {
+            flex: 0 1 350px;
         }
 
         h1 {
@@ -240,6 +261,15 @@ section {
             font-size: 14px;
             color: #666;
         }
+
+        ul {
+            display: block;
+            list-style: square inside;
+
+            li {
+                margin-left: 30px;
+            }
+        }
     }
 
     > div.content {
@@ -253,9 +283,20 @@ section {
             flex: 0 1 500px;
             padding: 10px 0;
             display: none;
+            position: relative;
+            overflow: hidden;
+            transition: .2s;
 
             &.on {
                 display: block;
+            }
+
+            &.mini {
+                flex: 0 1 80px;
+
+                button div:nth-of-type(2) {
+                    opacity: 0;
+                }
             }
         }
 
@@ -274,6 +315,8 @@ section {
     }
 
     .market-category-stock {
+        width: 500px;
+
         button {
             width: 100%;
             display: flex;
@@ -397,8 +440,9 @@ section {
     }
 
     .market-item-prices,
-    .market-item-history {
-        padding: 20px;
+    .market-item-history,
+    .market-item-dc {
+        padding: 5px 20px;
 
         h2 {
             font-size: 18px;
@@ -407,6 +451,15 @@ section {
             letter-spacing: 3px;
             text-align: center;
             padding: 10px;
+        }
+
+        small {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            width: 100%;
+            display: block;
+            text-transform: uppercase;
         }
     }
 
@@ -419,6 +472,11 @@ section {
             color: #5ea2dc;
             margin-bottom: 5px;
             letter-spacing: 2px;
+
+            padding: 10px;
+            text-align: center;
+            background-color: #222;
+            border-radius: 3px;
         }
 
         h3 {
@@ -472,7 +530,7 @@ section {
         color: #666;
         text-transform: uppercase;
 
-        background-color: #222;
+        background-color: #181818;
         border-radius: 3px;
         padding: 10px;
         margin-bottom: 5px;
@@ -495,8 +553,21 @@ section {
         }
     }
 
-    .market-item-prices-dc {
-        margin-top: 10px;
+    .market-item-dc-btn {
+        width: 100%;
+        border: solid 1px #000;
+        background-color: #144286;
+        color: #fff;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        box-shadow: 0 1px 5px #000;
+        cursor: pointer;
+        transition: .2s;
+
+        &:hover, &:active, &:focus {
+            background-color: #113365;
+        }
     }
 
     .max-size {
@@ -534,6 +605,19 @@ section {
             }
         }
     }
+
+    .market-category-toggle {
+        float: right;
+        margin: 0 20px 10px 0;
+        background-color: #282828;
+        border: solid 1px #000;
+        border-radius: 5px;
+        color: #aaa;
+        box-shadow: 0 1px 3px #000;
+        padding: 4px 12px;
+        cursor: pointer;
+        outline: none;
+    }
 }
 footer {
     font-size: 12px;
@@ -555,11 +639,11 @@ table {
             border-right: none;
         }
 
-        &:nth-of-type(2) {
-            color: yellow;
+        &.price {
+            color: #c5c574;
         }
 
-        &:nth-of-type(3) {
+        &.title {
             font-weight: 600;
         }
 

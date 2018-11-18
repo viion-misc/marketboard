@@ -10,6 +10,8 @@ class MarketPricing
         this.uiInfo    = $('.item-info');
         this.uiPrices  = $('.market-item-prices');
         this.uiHistory = $('.market-item-history');
+        this.uiServers = $('.market-item-dc');
+        this.pricePerDcTimeout = null;
     }
 
     renderPrices(itemId, callback)
@@ -17,13 +19,15 @@ class MarketPricing
         const server = localStorage.getItem('server');
 
         this.view.addClass('on');
-        this.uiPrices.html('<div class="loading">loading</div>');
+        this.uiPrices.html('<div class="loading"><img src="http://xivapi.com/mb/loading.svg"></div>');
+        this.uiServers.html('<button class="market-item-dc-btn">Show Cross World Prices</button>');
 
+        clearTimeout(this.pricePerDcTimeout);
         XIVAPI.getItemPrices(itemId, server, response => {
             this.uiPrices.html('<h2>Current Prices</h2>');
 
             let html = [];
-            html.push(`<tr><th width="1%">#</th><th width="25%">Total</th><th width="25%">Unit</th><th>Quantity</th><th>HQ</th><th>Town</th></tr>`);
+            html.push(`<tr><th width="1%">#</th><th width="25%">Total</th><th width="25%">Unit</th><th>QTY</th><th>HQ</th><th>Town</th></tr>`);
 
             let cheapest = -1;
             let cheapestId = 0;
@@ -36,8 +40,8 @@ class MarketPricing
                     html.push(`
                         <tr id="price-row-${i}">
                             <td>${i+1}</td>
-                            <td>${numeral(price.PriceTotal).format('0,0')}</td>
-                            <td>${numeral(price.PricePerUnit).format('0,0')}</td>
+                            <td class="price">${numeral(price.PriceTotal).format('0,0')}</td>
+                            <td class="price">${numeral(price.PricePerUnit).format('0,0')}</td>
                             <td>${price.Quantity}</td>
                             <td align="center">${price.IsHQ ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png" class="hq">' : ''}</td>
                             <td align="right"><img src="${Icon.get(price.Town.Icon)}"></td>
@@ -49,7 +53,7 @@ class MarketPricing
                         cheapestId = i;
                     }
 
-                    if (expensive === -1 || price.PriceTotal < expensive) {
+                    if (expensive === -1 || price.PriceTotal > expensive) {
                         expensive = price.PriceTotal;
                         expensiveId = i;
                     }
@@ -91,26 +95,6 @@ class MarketPricing
             if (typeof callback !== 'undefined') {
                 callback();
             }
-
-            // time per dc
-            this.uiPrices.append('<div class="market-item-prices-dc"><div class="loading">Loading Price Per Server</div></div>');
-            setTimeout(() => {
-                const servers = localStorage.getItem(ServerList.localeStorageDcServersKey).split(',');
-                const dc      =  localStorage.getItem(ServerList.localeStorageDcKey);
-                const pricePerServer = {};
-
-                // grab prices for each server
-                servers.forEach((server, i) => {
-                    XIVAPI.getItemPrices(itemId, server, response => {
-                        pricePerServer[server] = response.Prices;
-
-                        // once we have all prices, render them
-                        if (Object.keys(pricePerServer).length === servers.length) {
-                            this.renderPricePerServer(pricePerServer, dc);
-                        }
-                    });
-                });
-            }, 25);
         });
 
         // render item info
@@ -121,6 +105,8 @@ class MarketPricing
             html.push(`<img src="${Icon.get(item.Icon2x)}">`);
             html.push(`<div>`);
             html.push(`<h1 class="rarity-${item.Rarity}">${item.Name}</h1>`);
+            html.push(`<p>${item.Description}</p>`);
+
             if (item.ClassJobCategory) {
                 html.push(`
                     <p>Item Level: ${item.LevelItem} - Level ${item.LevelEquip} ${item.ClassJobCategory.Name}</p>
@@ -141,16 +127,53 @@ class MarketPricing
         this.uiPrices.on('click', '.show-more', () => {
             this.uiPrices.find('.max-size').addClass('off');
         });
+
+        // on clicking to load all prices across servers
+        $('.market-item-dc-btn').on('click', () => {
+            this.renderPricesForDc(itemId);
+        });
+    }
+
+    renderPricesForDc(itemId)
+    {
+        this.uiServers.html(`<div class="loading">
+            <img src="http://xivapi.com/mb/loading.svg"></div>
+            <small>Just a few seconds... <span></span></small>
+        `);
+
+        clearTimeout(this.pricePerDcTimeout);
+        this.pricePerDcTimeout = setTimeout(() => {
+            const dc      =  localStorage.getItem(ServerList.localeStorageDcKey);
+            const servers = localStorage.getItem(ServerList.localeStorageDcServersKey).split(',');
+            const pricePerServer = {};
+
+            this.uiServers.find('span').html(`0 / ${servers.length}`);
+
+            // grab prices for each server
+            servers.forEach((server, i) => {
+                XIVAPI.getItemPrices(itemId, server, response => {
+                    pricePerServer[server] = response.Prices;
+                    this.uiServers.find('span').html(`${Object.keys(pricePerServer).length} / ${servers.length}`);
+
+                    // once we have all prices, render them
+                    if (Object.keys(pricePerServer).length === servers.length) {
+                        this.renderPricePerServer(pricePerServer, dc);
+                    }
+                });
+            });
+        }, 500);
     }
 
     renderPricePerServer(prices, dc)
     {
+        this.uiServers.html(`<div class="market-item-prices-dc"></div>`);
+
         const html = [];
         html.push('<table>');
         html.push(`
             <tr>
                 <th width="25%">Server</th>
-                <th width="5%">Quantity</th>
+                <th width="5%">QTY</th>
                 <th>Max/Unit</th>
                 <th>Max Total</th>
                 <th>Min/Unit</th>
@@ -204,12 +227,12 @@ class MarketPricing
             if (serverInfo.Quantity > 0) {
                 html.push(`
                     <tr id="price-per-server-${server}">
-                        <td>${serverInfo.Server}</td>
+                        <td class="title">${serverInfo.Server}</td>
                         <td>${serverInfo.Quantity}</td>
                         <td>${numeral(serverInfo.MaxPricePerUnit).format('0,0')}</td>
-                        <td>${numeral(serverInfo.MaxPriceTotal).format('0,0')}</td>
+                        <td class="price">${numeral(serverInfo.MaxPriceTotal).format('0,0')}</td>
                         <td>${numeral(serverInfo.MinPricePerUnit).format('0,0')}</td>
-                        <td>${numeral(serverInfo.MinPriceTotal).format('0,0')}</td>
+                        <td class="price">${numeral(serverInfo.MinPriceTotal).format('0,0')}</td>
                     </tr>
                 `);
             } else {
@@ -224,11 +247,11 @@ class MarketPricing
 
         html.push('</table>');
 
-        this.uiPrices.find('.market-item-prices-dc').html(`<h2>Prices Per Server (${dc})</h2>`);
+        this.uiServers.find('.market-item-prices-dc').html(`<h2>Prices Per Server (${dc})</h2>`);
 
         // highlight the cheapest row
         if (cheapest > -1) {
-            this.uiPrices.find('.market-item-prices-dc')
+            this.uiServers.find('.market-item-prices-dc')
                 .append(`<div class="market-item-prices-cheap">
                     <div>
                         <strong>(MIN)</strong> ${cheapestId} &nbsp; 
@@ -244,14 +267,14 @@ class MarketPricing
         }
 
         // show pricing table
-        this.uiPrices.find('.market-item-prices-dc').append(html.join(''));
+        this.uiServers.find('.market-item-prices-dc').append(html.join(''));
 
         // highlight min and max
         if (cheapest > -1) {
-            this.uiPrices.find(`#price-per-server-${expensiveId}`).addClass('expensive');
+            this.uiServers.find(`#price-per-server-${expensiveId}`).addClass('expensive');
 
             if (cheapestId !== expensiveId) {
-                this.uiPrices.find(`#price-per-server-${cheapestId}`).addClass('cheapest');
+                this.uiServers.find(`#price-per-server-${cheapestId}`).addClass('cheapest');
             }
         }
     }
@@ -259,14 +282,14 @@ class MarketPricing
     renderHistory(itemId, callback)
     {
         const server = localStorage.getItem('server');
-        this.uiHistory.html('<div class="loading">loading</div>');
+        this.uiHistory.html('<div class="loading"><img src="http://xivapi.com/mb/loading.svg"></div>');
 
         XIVAPI.getItemPriceHistory(itemId, server, response => {
             this.uiHistory.html('<h2>History</h2>');
-            this.uiHistory.append('<div class="market-item-history-stats"></div>');
+            this.uiHistory.append('<div class="market-item-history-extra"></div>');
 
             let html = [];
-            html.push(`<tr><th>#</th><th width="25%">Total</th><th width="25%">Unit</th><th>Quantity</th><th>HQ</th><th>Date</th></tr>`);
+            html.push(`<tr><th>#</th><th width="25%">Total</th><th width="25%">Unit</th><th>QTY</th><th>HQ</th><th>Date</th></tr>`);
 
             // render prices
             if (response.History.length > 0) {
@@ -274,8 +297,8 @@ class MarketPricing
                     html.push(`
                         <tr>
                             <td width="1%">${i+1}</td>
-                            <td>${numeral(price.PriceTotal).format('0,0')}</td>
-                            <td>${numeral(price.PricePerUnit).format('0,0')}</td>
+                            <td class="price">${numeral(price.PriceTotal).format('0,0')}</td>
+                            <td class="price">${numeral(price.PricePerUnit).format('0,0')}</td>
                             <td>${price.Quantity}</td>
                             <td align="center">${price.IsHQ ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png" class="hq">' : ''}</td>
                             <td align="right">${moment.unix(price.PurchaseDate).fromNow(true)}</td>
@@ -313,7 +336,7 @@ class MarketPricing
         //
         // High, Low, Avg
         //
-        const $ui = this.uiHistory.find('.market-item-history-stats');
+        const $ui = this.uiHistory.find('.market-item-history-extra');
         const statistics = {
             PriceTotalLow:    0,
             PriceTotalHigh:   0,
@@ -375,28 +398,8 @@ class MarketPricing
         statistics.PriceTotalAvg = statistics.PriceTotalTotal / statistics.PriceTotalAvgArr.length;
         statistics.PriceUnitAvg = statistics.PriceUnitTotal / statistics.PriceUnitAvgArr.length;
 
-        // show some statz
-        $ui.html(`
-            <div>
-                <h4>PRICE TOTAL</h4>
-                <div>
-                    <div><h3>LOW</h3>${numeral(statistics.PriceTotalLow).format('0,0')}</div>
-                    <div><h3>HIGH</h3>${numeral(statistics.PriceTotalHigh).format('0,0')}</div>
-                    <div><h3>AVG</h3>${numeral(statistics.PriceTotalAvg).format('0,0')}</div>
-                </div>
-            </div>
-            <div>
-                <h4>PRICE UNIT</h4>
-                <div>
-                    <div><h3>LOW</h3>${numeral(statistics.PriceUnitLow).format('0,0')}</div>
-                    <div><h3>HIGH</h3>${numeral(statistics.PriceUnitHigh).format('0,0')}</div>
-                    <div><h3>AVG</h3>${numeral(statistics.PriceUnitAvg).format('0,0')}</div>
-                </div>
-            </div>
-        `);
-
         // show stats graph
-        $ui.after(`<div class="market-item-history-chart"><canvas id="price-history" width="620" height="240"></canvas></div>`);
+        $ui.html(`<div class="market-item-history-chart"><canvas id="price-history" width="620" height="240"></canvas></div>`);
         new Chart(document.getElementById("price-history").getContext('2d'), {
             type: 'line',
             data: {
@@ -410,6 +413,7 @@ class MarketPricing
                 }]
             },
             options: {
+                animation: false,
                 tooltips: {
                     position: 'nearest',
                     intersect: false
@@ -428,6 +432,28 @@ class MarketPricing
                 }
             }
         });
+
+        // show some statz
+        $ui.after(`
+            <div class="market-item-history-stats">
+                <div>
+                    <h4>PRICE TOTAL</h4>
+                    <div>
+                        <div><h3>LOW</h3>${numeral(statistics.PriceTotalLow).format('0,0')}</div>
+                        <div><h3>HIGH</h3>${numeral(statistics.PriceTotalHigh).format('0,0')}</div>
+                        <div><h3>AVG</h3>${numeral(statistics.PriceTotalAvg).format('0,0')}</div>
+                    </div>
+                </div>
+                <div>
+                    <h4>PRICE UNIT</h4>
+                    <div>
+                        <div><h3>LOW</h3>${numeral(statistics.PriceUnitLow).format('0,0')}</div>
+                        <div><h3>HIGH</h3>${numeral(statistics.PriceUnitHigh).format('0,0')}</div>
+                        <div><h3>AVG</h3>${numeral(statistics.PriceUnitAvg).format('0,0')}</div>
+                    </div>
+                </div>
+            </div>
+        `);
     }
 }
 
