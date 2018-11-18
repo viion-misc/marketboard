@@ -409,6 +409,131 @@ section {
             padding: 10px;
         }
     }
+
+    .market-item-history-stats {
+        display: flex;
+
+        h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: #5ea2dc;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        h3 {
+            font-size: 12px;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        > div {
+            flex: 0 1 50%;
+            margin-bottom: 5px;
+            text-align: center;
+
+            &:first-of-type {
+                margin-right: 2px;
+            }
+
+            &:last-of-type {
+                margin-left: 2px;
+            }
+
+            > div {
+                display: flex;
+
+                > div {
+                    flex: 0 1 33%;
+                    padding: 10px;
+                    text-align: center;
+                    background-color: #222;
+                    border-radius: 3px;
+
+                    &:nth-of-type(2) {
+                        margin: 0 4px;
+                    }
+                }
+            }
+        }
+    }
+
+    .market-item-history-chart {
+        padding: 10px;
+        background-color: #222;
+        border-radius: 3px;
+        margin-bottom: 5px;
+    }
+
+    .market-item-prices-cheap {
+        font-size: 16px;
+        font-weight: 400;
+        color: #666;
+        text-transform: uppercase;
+
+        background-color: #222;
+        border-radius: 3px;
+        padding: 10px;
+        margin-bottom: 5px;
+        line-height: 24px;
+
+        img {
+            vertical-align: middle;
+            margin: 0 0 2px 0;
+        }
+
+        span {
+            color: #c5c574;
+        }
+
+        strong {
+            display: inline-block;
+            font-weight: 900;
+            color: #818181;
+            width: 55px;
+        }
+    }
+
+    .market-item-prices-dc {
+        margin-top: 10px;
+    }
+
+    .max-size {
+        max-height: 400px;
+        overflow: hidden;
+        border-radius: 0 0 5px 5px;
+        position: relative;
+
+        .show-more {
+            position: absolute;
+            bottom: 0; left: 0; right: 10px;
+            width: 100%;
+            display: block;
+            line-height: 32px;
+            font-size: 14px;
+            text-transform: uppercase;
+            border: none;
+            color: #888;
+            background-color: #282828;
+            box-shadow: 0 0 10px 1px #000;
+            outline: none;
+            transition: .1s;
+
+            &:hover, &:focus, &:active {
+                background-color: #181818;
+                cursor: pointer;
+            }
+        }
+
+        &.off {
+            max-height: 100%;
+
+            .show-more {
+                display: none;
+            }
+        }
+    }
 }
 footer {
     font-size: 12px;
@@ -430,11 +555,11 @@ table {
             border-right: none;
         }
 
-        &:nth-of-type(1) {
+        &:nth-of-type(2) {
             color: yellow;
         }
 
-        &:nth-of-type(2) {
+        &:nth-of-type(3) {
             font-weight: 600;
         }
 
@@ -445,10 +570,23 @@ table {
                 margin: 4px 0 0 0;
             }
         }
+
+        small {
+            color: #555;
+            text-align: center;
+        }
     }
 
     tr {
         border-bottom: solid 2px #000;
+
+        &.cheapest {
+            background-color: #162e20;
+        }
+
+        &.expensive {
+            background-color: #331d18;
+        }
     }
 
     th {
@@ -460,7 +598,7 @@ table {
         text-transform: uppercase;
         box-shadow: 0 1px 2px #000;
         background-color: #181818;
-        color: #3dafff;
+        color: #5ea2dc;
         font-weight: 600;
     }
 }

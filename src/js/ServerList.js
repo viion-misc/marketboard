@@ -5,9 +5,13 @@ class ServerList
     constructor()
     {
         this.localeStorageKey = 'server';
+        this.localeStorageDcKey = 'dc';
+        this.localeStorageDcServersKey = 'dc_servers';
         this.defaultServer = 'Phoenix';
         this.ui = $('.server-select-box');
-    }
+        this.serverToDc = {};
+        this.dcToServers = {}
+    };
 
     /**
      * Populates the server drop down
@@ -15,18 +19,22 @@ class ServerList
     setServerList()
     {
         XIVAPI.getServerList(response => {
+            this.dcToServers = response;
+
             // loop through each data center
             response.forEach((servers, dataCenter) => {
                 // build options html
                 let serverGroup = [];
                 servers.forEach(server => {
                     serverGroup.push(`<option value="${server}">${server}</option>`);
+                    this.serverToDc[server] = dataCenter;
                 });
 
                 // add options
                 this.ui.append(
                     `<optgroup label="${dataCenter}">${serverGroup.join('')}</optgroup>`
                 );
+
             });
 
             // set users server
@@ -41,8 +49,11 @@ class ServerList
     {
         let server = localStorage.getItem(this.localeStorageKey);
         server = server ? server : this.defaultServer;
+        let dc = this.serverToDc[server];
+
         localStorage.setItem(this.localeStorageKey, server);
-        console.log(`Server set to: ${server}`);
+        localStorage.setItem(this.localeStorageDcKey, dc);
+        localStorage.setItem(this.localeStorageDcServersKey, this.dcToServers[dc].join(','));
 
         // select it in the server list
         this.ui.val(server);
