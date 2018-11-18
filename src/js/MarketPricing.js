@@ -107,7 +107,6 @@ class MarketPricing
             html.push(`<img src="${Icon.get(item.Icon)}">`);
             html.push(`<div>`);
             html.push(`<h1 class="rarity-${item.Rarity}">${item.Name}</h1>`);
-            html.push(`<p>${item.Description}</p>`);
 
             if (item.ClassJobCategory) {
                 html.push(`
@@ -180,8 +179,6 @@ class MarketPricing
 
     renderPricePerServer(prices, dc)
     {
-        console.log(prices);
-
         this.uiServers.html(`<div class="market-item-prices-dc"></div>`);
 
         const html = [];
