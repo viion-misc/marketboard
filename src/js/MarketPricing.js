@@ -101,6 +101,8 @@ class MarketPricing
         XIVAPI.getItem(itemId, item => {
             let html = [];
 
+            html.push(`<button class="refresh-listing">Refresh</button>`);
+
             // todo - wtb template engine..
             html.push(`<img src="${Icon.get(item.Icon)}">`);
             html.push(`<div>`);
@@ -121,6 +123,13 @@ class MarketPricing
 
             // render info
             this.uiInfo.html(html.join(''));
+
+            // on clicking to load all prices across servers
+            $('.refresh-listing').unbind('click');
+            $('.refresh-listing').on('click', () => {
+                this.renderPrices(itemId, callback);
+                this.renderHistory(itemId, callback);
+            });
         });
 
         // watch clicking on "show more"
@@ -129,6 +138,7 @@ class MarketPricing
         });
 
         // on clicking to load all prices across servers
+        $('.market-item-dc-btn').unbind('click');
         $('.market-item-dc-btn').on('click', () => {
             this.renderPricesForDc(itemId);
         });
@@ -271,10 +281,10 @@ class MarketPricing
 
         // highlight min and max
         if (cheapest > -1) {
-            this.uiServers.find(`#price-per-server-${expensiveId}`).addClass('expensive');
+            this.uiServers.find(`#price-per-server-${cheapestId}`).addClass('cheapest');
 
             if (cheapestId !== expensiveId) {
-                this.uiServers.find(`#price-per-server-${cheapestId}`).addClass('cheapest');
+                this.uiServers.find(`#price-per-server-${expensiveId}`).addClass('expensive');
             }
         }
     }
@@ -301,7 +311,7 @@ class MarketPricing
                             <td class="price">${numeral(price.PricePerUnit).format('0,0')}</td>
                             <td>${price.Quantity}</td>
                             <td align="center">${price.IsHQ ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png" class="hq">' : ''}</td>
-                            <td align="right">${moment.unix(price.PurchaseDate).fromNow(true)}</td>
+                            <td align="right">${moment.unix(price.PurchaseDate).fromNow()}</td>
                         </tr>
                     `);
                 });

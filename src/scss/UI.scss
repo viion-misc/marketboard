@@ -7,6 +7,7 @@ html {
     background-attachment: fixed;
     color: #ccc;
     font-size: 16px;
+    text-shadow: 0 1px 2px #000;
 }
 a {
     color: #ffcafd;
@@ -222,6 +223,7 @@ section {
             padding: 20px;
             border-radius: 5px;
             background-color: #262626;
+            margin-bottom: 30px;
 
             h4 {
                 font-size: 26px;
@@ -246,7 +248,19 @@ section {
         h1 {
             font-size: 32px;
             font-weight: 300;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: #ed6fff;
+        }
+
+        strong {
+            color: #e2ec7a;
+            font-weight: 800;
         }
 
         p {
@@ -400,6 +414,29 @@ section {
     .item-info {
         padding: 30px 0 10px 30px;
         display: flex;
+        position: relative;
+
+        .refresh-listing {
+            position: absolute;
+            right: 20px;
+            border: solid 1px #000;
+            background-color: #163039;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 13px;
+            text-transform: uppercase;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 1px 3px #000;
+            transition: .1s;
+            opacity: 0.6;
+
+            &:hover, &:focus, &:active {
+                background-color: #243b60;
+                opacity: 1;
+            }
+        }
 
         img {
             flex: 0 1 40px;
@@ -534,10 +571,27 @@ section {
         text-transform: uppercase;
 
         background-color: #181818;
-        border-radius: 3px;
-        padding: 10px;
+        border-radius: 5px;
         margin-bottom: 5px;
         line-height: 24px;
+        display: flex;
+        overflow: hidden;
+
+        > div {
+            flex: 0 1 50%;
+            padding: 5px 10px;
+
+            &:first-of-type {
+                background-color: #162e20;
+                border-right: solid 1px #000;
+            }
+
+            &:last-of-type {
+                background-color: #331d18;
+                border-left: solid 1px #000;
+                text-align: right;
+            }
+        }
 
         img {
             vertical-align: middle;
@@ -667,6 +721,10 @@ table {
     tr {
         border-bottom: solid 2px #000;
 
+        &:hover {
+            background-color: #161616;
+        }
+
         &.cheapest {
             background-color: #162e20;
         }
@@ -687,6 +745,20 @@ table {
         background-color: #181818;
         color: #5ea2dc;
         font-weight: 600;
+    }
+}
+.market-item-dc tr.cheapest {
+    background-color: #162e20;
+
+    td:nth-of-type(5), td:nth-of-type(6) {
+        background-color: #1a412f;
+    }
+}
+.market-item-dc tr.expensive {
+    background-color: #331d18;
+
+    td:nth-of-type(3), td:nth-of-type(4) {
+        background-color: #4a2e1e;
     }
 }
 //
