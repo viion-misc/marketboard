@@ -162,8 +162,12 @@ class MarketPricing
             // grab prices for each server
             servers.forEach((server, i) => {
                 XIVAPI.getItemPrices(itemId, server, response => {
-                    pricePerServer[server] = response.Prices;
-                    this.uiServers.find('span').html(`${Object.keys(pricePerServer).length} / ${servers.length}`);
+                    if (response.Error) {
+                        pricePerServer[server] = false;
+                    } else {
+                        pricePerServer[server] = response.Prices;
+                        this.uiServers.find('span').html(`${Object.keys(pricePerServer).length} / ${servers.length}`);
+                    }
 
                     // once we have all prices, render them
                     if (Object.keys(pricePerServer).length === servers.length) {
@@ -176,6 +180,8 @@ class MarketPricing
 
     renderPricePerServer(prices, dc)
     {
+        console.log(prices);
+
         this.uiServers.html(`<div class="market-item-prices-dc"></div>`);
 
         const html = [];
@@ -193,63 +199,76 @@ class MarketPricing
 
         let cheapest = -1;
         let cheapestId = 0;
+        let cheapestHq = false;
         let expensive = -1;
         let expensiveId = 0;
+        let expensiveHq = false;
 
         prices.forEach((prices, server) => {
-            const serverInfo = {
-                Server: server,
-                Quantity: prices.length,
-                MaxPricePerUnit: 0,
-                MaxPriceTotal: 0,
-                MinPricePerUnit: 0,
-                MinPriceTotal: 0,
-            };
+            if (prices !== false) {
+                const serverInfo = {
+                    Server: server,
+                    Quantity: prices.length,
+                    MaxPricePerUnit: 0,
+                    MaxPriceTotal: 0,
+                    MinPricePerUnit: 0,
+                    MinPriceTotal: 0,
+                };
 
-            prices.forEach((price, i) => {
-                if (serverInfo.MaxPricePerUnit === 0 || serverInfo.MaxPricePerUnit < price.PricePerUnit) {
-                    serverInfo.MaxPricePerUnit = price.PricePerUnit;
+                prices.forEach((price, i) => {
+                    if (serverInfo.MaxPricePerUnit === 0 || serverInfo.MaxPricePerUnit < price.PricePerUnit) {
+                        serverInfo.MaxPricePerUnit = price.PricePerUnit;
+                    }
+
+                    if (serverInfo.MinPricePerUnit === 0 || serverInfo.MinPricePerUnit > price.PricePerUnit) {
+                        serverInfo.MinPricePerUnit = price.PricePerUnit;
+                    }
+
+                    if (serverInfo.MaxPriceTotal === 0 || serverInfo.MaxPriceTotal < price.PriceTotal) {
+                        serverInfo.MaxPriceTotal = price.PriceTotal;
+                    }
+
+                    if (serverInfo.MinPriceTotal === 0 || serverInfo.MinPriceTotal > price.PriceTotal) {
+                        serverInfo.MinPriceTotal = price.PriceTotal;
+                    }
+
+                    if (cheapest === -1 || price.PriceTotal < cheapest) {
+                        cheapest = price.PriceTotal;
+                        cheapestId = server;
+                        cheapestHq = price.IsHQ;
+                    }
+
+                    if (expensive === -1 || price.PriceTotal > expensive) {
+                        expensive = price.PriceTotal;
+                        expensiveId = server;
+                        expensiveHq = price.IsHQ;
+                    }
+                });
+
+                if (serverInfo.Quantity > 0) {
+                    html.push(`
+                        <tr id="price-per-server-${server}">
+                            <td class="title">${serverInfo.Server}</td>
+                            <td>${serverInfo.Quantity}</td>
+                            <td>${numeral(serverInfo.MaxPricePerUnit).format('0,0')}</td>
+                            <td class="price">${numeral(serverInfo.MaxPriceTotal).format('0,0')}</td>
+                            <td>${numeral(serverInfo.MinPricePerUnit).format('0,0')}</td>
+                            <td class="price">${numeral(serverInfo.MinPriceTotal).format('0,0')}</td>
+                        </tr>
+                    `);
+                } else {
+                    html.push(`
+                        <tr id="price-per-server-${server}">
+                            <td>${server}</td>
+                            <td colspan="5"><small>None for sale</small></td>
+                        </tr>
+                    `);
                 }
-
-                if (serverInfo.MinPricePerUnit === 0 || serverInfo.MinPricePerUnit > price.PricePerUnit) {
-                    serverInfo.MinPricePerUnit = price.PricePerUnit;
-                }
-
-                if (serverInfo.MaxPriceTotal === 0 || serverInfo.MaxPriceTotal < price.PriceTotal) {
-                    serverInfo.MaxPriceTotal = price.PriceTotal;
-                }
-
-                if (serverInfo.MinPriceTotal === 0 || serverInfo.MinPriceTotal > price.PriceTotal) {
-                    serverInfo.MinPriceTotal = price.PriceTotal;
-                }
-
-                if (cheapest === -1 || price.PriceTotal < cheapest) {
-                    cheapest = price.PriceTotal;
-                    cheapestId = server;
-                }
-
-                if (expensive === -1 || price.PriceTotal > expensive) {
-                    expensive = price.PriceTotal;
-                    expensiveId = server;
-                }
-            });
-
-            if (serverInfo.Quantity > 0) {
-                html.push(`
-                    <tr id="price-per-server-${server}">
-                        <td class="title">${serverInfo.Server}</td>
-                        <td>${serverInfo.Quantity}</td>
-                        <td>${numeral(serverInfo.MaxPricePerUnit).format('0,0')}</td>
-                        <td class="price">${numeral(serverInfo.MaxPriceTotal).format('0,0')}</td>
-                        <td>${numeral(serverInfo.MinPricePerUnit).format('0,0')}</td>
-                        <td class="price">${numeral(serverInfo.MinPriceTotal).format('0,0')}</td>
-                    </tr>
-                `);
             } else {
                 html.push(`
                     <tr id="price-per-server-${server}">
-                        <td>${serverInfo.Server}</td>
-                        <td colspan="5"><small>None for sale</small></td>
+                        <td>${server}</td>
+                        <td colspan="5"><small>Server not supported :(</small></td>
                     </tr>
                 `);
             }
@@ -266,12 +285,12 @@ class MarketPricing
                     <div>
                         <strong>(MIN)</strong> ${cheapestId} &nbsp; 
                         <img src="https://raw.githubusercontent.com/viion/marketboard/master/favicon.png" height="16">
-                        <span>${numeral(cheapest).format('0,0')}</span>
+                        <span>${numeral(cheapest).format('0,0')} ${cheapestHq ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png">' : ''}</span>
                     </div>
                     <div>
                         <strong>(MAX)</strong> ${expensiveId} &nbsp; 
                         <img src="https://raw.githubusercontent.com/viion/marketboard/master/favicon.png" height="16">
-                        <span>${numeral(expensive).format('0,0')}</span>
+                        <span>${numeral(expensive).format('0,0')} ${expensiveHq ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png">' : ''}</span>
                     </div>
                 </div>`);
         }
