@@ -20,6 +20,17 @@ class MarketCategoryStock
         XIVAPI.getCategoryListings(categoryId, server, response => {
             this.ui.html('');
 
+            if (response.Error) {
+                this.ui.html(`
+                    <div class="error">Sorry, at this time we do not support this server, this is likely
+                    due to the server being locked for new characters. If you have a spare account on <strong>${server}</strong>
+                    we would love to hear from you!<br><br>
+                    ${response.Debug.Note}
+                `);
+
+                return;
+            }
+
             // render stock
             response.forEach((stock, i) => {
                 this.ui.append(

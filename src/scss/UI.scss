@@ -710,3 +710,13 @@ select {
     font-size: 24px;
     color: #555;
 }
+.error {
+    margin: 50px 20px 20px 20px;
+    background-color: #313131;
+    border: solid 2px coral;
+    box-shadow: inset 0 0 20px #686868;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    line-height: 24px;
+}
