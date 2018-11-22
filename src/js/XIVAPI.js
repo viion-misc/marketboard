@@ -39,6 +39,13 @@ class XIVAPI
         this.get(`/Item/${itemId}`, {}, callback);
     }
 
+    getItemList(ids, callback) {
+        this.get(`/Item`, {
+            ids: ids,
+            columns: 'ID,Icon,Name,ItemSearchCategory.ID',
+        }, callback);
+    }
+
     /**
      * Get the current prices for an item on a specific server
      */

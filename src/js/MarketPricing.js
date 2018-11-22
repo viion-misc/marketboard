@@ -1,4 +1,5 @@
 import XIVAPI from './XIVAPI';
+import WishList from './WishList';
 import ServerList from './ServerList';
 import Icon from './Icon';
 
@@ -44,7 +45,10 @@ class MarketPricing
                             <td class="price">${numeral(price.PricePerUnit).format('0,0')}</td>
                             <td>${price.Quantity}</td>
                             <td align="center">${price.IsHQ ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png" class="hq">' : ''}</td>
-                            <td align="right"><img src="${Icon.get(price.Town.Icon)}"></td>
+                            <td align="right">
+                                <span>${price.RetainerName}4</span>
+                                <img src="${Icon.get(price.Town.Icon)}">
+                            </td>
                         </tr>
                     `);
 
@@ -102,6 +106,7 @@ class MarketPricing
             let html = [];
 
             html.push(`<button class="refresh-listing">Refresh</button>`);
+            html.push(`<button class="add-to-wishlist">Wish List</button>`);
 
             // todo - wtb template engine..
             html.push(`<img src="${Icon.get(item.Icon)}">`);
@@ -128,6 +133,12 @@ class MarketPricing
             $('.refresh-listing').on('click', () => {
                 this.renderPrices(itemId, callback);
                 this.renderHistory(itemId, callback);
+            });
+
+            // on clicking to load all prices across servers
+            $('.add-to-wishlist').unbind('click');
+            $('.add-to-wishlist').on('click', () => {
+                WishList.toggle(itemId);
             });
         });
 

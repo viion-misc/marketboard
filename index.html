@@ -37,18 +37,6 @@
                 <!-- Market Categories -->
                 <div class="market-categories"></div>
 
-                <footer>
-                    <p>
-                        <a href="https://github.com/viion/marketboard" target="_blank">GitHub Code</a>
-                    </p>
-                    <p>
-                        <a href="https://xivapi.com/docs/Market" target="_blank">Market APi Docs</a>
-                    </p>
-                    <p style="padding: 0 15px;">
-                        ALL FINAL FANTASY XIV CONTENT IS PROPERTY OF SQUARE ENIX CO., LTD
-                    </p>
-                </footer>
-
             </nav>
             <section>
 
@@ -57,6 +45,9 @@
                 <div class="search">
                     <input type="search" placeholder="Search">
                     <div class="search-results"></div>
+                </div>
+
+                <div class="wishlist">
                 </div>
 
                 <div class="home on">
@@ -143,10 +134,19 @@
                             </ul>
                         </small>
 
-                        <br>
+                        <hr>
 
-                        <small>Mogboard and XIVAPI by: Vekien, <em>aka</em> Premium Virtue (Phoenix)</small><br>
-                        <small>ALL FINAL FANTASY XIV CONTENT IS PROPERTY OF SQUARE ENIX CO., LTD</small>
+                        <footer>
+                            <p>
+                                Mogboard and XIVAPI by: Vekien, <em>aka</em> Premium Virtue (Phoenix)
+                                <br>
+                                <a href="https://github.com/viion/marketboard" target="_blank">GitHub Code</a>
+                                &nbsp; - &nbsp;
+                                <a href="https://xivapi.com/docs/Market" target="_blank">Market APi Docs</a>
+                                <br><br>
+                                ALL FINAL FANTASY XIV CONTENT IS PROPERTY OF SQUARE ENIX CO., LTD
+                            </p>
+                        </footer>
                     </div>
                     <div>
                         <div>
@@ -164,7 +164,7 @@
                 <div class="content">
                     <div class="market-category-stock-ui">
                         <!-- toggle stock view -->
-                        <button class="market-category-toggle">🢀</button>
+                        <button class="market-category-toggle"></button>
                         <!-- Market Stock Listing (Item+Quantity) -->
                         <div class="market-category-stock"></div>
                     </div>
@@ -175,11 +175,13 @@
                         <!-- Market Prices for selected item -->
                         <div class="market-item-prices"></div>
 
+                        <!-- Market Price Per Server -->
+                        <div class="market-item-dc"></div>
+
                         <!-- Market Price History for selected item -->
                         <div class="market-item-history"></div>
 
-                        <!-- Market Price Per Server -->
-                        <div class="market-item-dc"></div>
+
                     </div>
                 </div>
 

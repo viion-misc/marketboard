@@ -24,9 +24,8 @@ main {
 nav {
     position: relative;
     z-index: 50;
-
-    background-color: #333;
-    flex: 0 1 300px;
+    background-color: #222;
+    flex: 0 1 250px;
     padding-bottom: 100px;
     border-right: solid 1px #000;
     box-shadow: 1px 0 5px #000;
@@ -41,13 +40,13 @@ nav {
     button {
         width: 100%;
         display: flex;
-        background-color: transparent;
+        background-color: #333;
         border: none;
-        padding: 10px;
+        padding: 6px 0 4px 6px;
         color: #fff;
         text-align: left;
         border-bottom: solid 1px #000;
-        font-size: 16px;
+        font-size: 14px;
         text-shadow: 0 1px 2px #000;
         transition: .1s;
         line-height: 24px;
@@ -70,19 +69,30 @@ nav {
     }
 
     .logo {
-        text-align: center;
-        padding: 20px 0;
+        display: flex;
+        margin-bottom: 20px;
+        margin-top: 10px;
 
-        img {
-            height: 80px;
+        > a {
+            flex: 0 1 100px;
+            display: inline-block;
+            text-align: center;
+
+            img {
+                height: 80px;
+                margin-top: -30px;
+            }
         }
 
         h1 {
-            font-size: 30px;
-            font-weight: 700;
+            flex: 0 1 180px;
+            font-size: 24px;
+            font-weight: 300;
             color: #fff;
+            margin-top: 15px;
 
             span {
+                font-weight: 400;
                 color: yellow;
             }
         }
@@ -94,26 +104,33 @@ nav {
     }
 
     .market-categories {
-        div {
-            border-bottom: solid 10px #000;
+        h3 {
+            background-color: #222;
+            color: #555;
+            font-size: 16px;
+            padding: 8px;
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: 5px;
+            border-top: solid 1px #000;
+            border-bottom: solid 1px #000;
         }
-    }
-
-    p {
-        margin-bottom: 15px;
     }
 }
 section {
-    flex: 0 1 calc(100% - 300px);
+    flex: 0 1 calc(100% - 250px);
 
     .search {
-        position: relative;
+        position: absolute;
         z-index: 30;
         box-shadow: 0 1px 3px #000;
-        background-color: #333;
-        width: 500px + 660px;
-        padding: 10px;
-        border-radius: 0 0 6px 0;
+        border-radius: 0 0 10px 0;
+        background-color: #282828;
+        width: 500px;
+        padding: 0 15px;
+        height: 70px;
+        left: 250px;
 
         input {
             width: 100%;
@@ -125,14 +142,32 @@ section {
             padding: 0 15px;
             border: solid 1px #000;
             box-shadow: 0 1px 5px #222;
-            border-radius: 3px;
+            border-radius: 5px;
             background-color: #515151;
+            margin-top: 10px;
         }
+    }
+
+    .wishlist {
+        position: absolute;
+        z-index: 30;
+        box-shadow: 0 1px 3px #000;
+        background-color: #282828;
+        width: calc(100% - (300px + 500px));
+        border-radius: 0 0 0 10px;
+        right: 0;
+        height: 70px;
+        text-align: right;
     }
 
     .search-results {
         margin: 0 -10px;
         display: none;
+        background-color: #333;
+        margin: 10px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 15px 5px #000;
 
         &.on {
             display: block;
@@ -212,9 +247,8 @@ section {
         box-shadow: 0 1px 3px #000;
         background-color: #151515;
         width: 500px + 580px;
-        padding: 60px 50px 50px 50px;
+        padding: 100px 50px 50px 50px;
         border-radius: 0 0 6px 0;
-        margin-top: -10px;
         display: none;
         font-size: 18px;
         line-height: 24px;
@@ -291,16 +325,18 @@ section {
 
     > div.content {
         display: flex;
+        margin-top: 90px;
 
         > .market-category-stock-ui {
             background-color: #181818;
             border: solid 1px #000;
-            border-radius: 0 0 5px 0;
-            box-shadow: 0 1px 10px rgba(0,0,0,0.3);
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
             flex: 0 1 500px;
             padding: 10px 0;
             display: none;
             position: relative;
+            z-index: 15;
             overflow: hidden;
             transition: .2s;
 
@@ -318,16 +354,26 @@ section {
         }
 
         > .item-market-ui {
-            background-color: #080808;
+            background-color: #1c1c1c;
             border: solid 1px #000;
-            border-radius: 0 0 5px 0;
-            box-shadow: 0 1px 10px rgba(0,0,0,0.3);
-            flex: 0 1 680px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 15;
+            flex: 0 1 calc(100% - 600px);
             display: none;
+            margin-left: 20px;
+            border-radius: 10px;
 
             &.on {
                 display: block;
             }
+        }
+
+        > .item-wishlist {
+            background-color: #333;
+            flex: 0 1 100px;
+            border-radius: 0 0 5px 0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
     }
 
@@ -337,14 +383,14 @@ section {
         button {
             width: 100%;
             display: flex;
-            line-height: 50px;
+            line-height: 40px;
             border: none;
             border-bottom: solid 1px #000;
             color: #fff;
             background-color: transparent;
             text-align: left;
             padding: 0 20px;
-            font-size: 18px;
+            font-size: 16px;
             transition: .1s;
             outline: none;
 
@@ -358,19 +404,19 @@ section {
                 span {
                     border-radius: 5px;
                     box-shadow: 0 1px 3px #000;
-                    margin: 5px 0 0 0;
+                    margin: 7px 0 0 0;
 
                     position: relative;
                     display: block;
-                    width: 40px;
-                    height: 40px;
+                    width: 26px;
+                    height: 26px;
                     overflow: hidden;
                 }
 
                 img {
                     position: absolute;
-                    width: 40px;
-                    height: 40px;
+                    width: 26px;
+                    height: 26px;
                     left: 0;
                     top: 0;
                 }
@@ -378,11 +424,11 @@ section {
 
             div:last-of-type {
                 flex: 0 1 calc(100% - 100px);
-                padding-left: 10px;
             }
 
             span {
-                font-size: 20px;
+                font-size: 16px;
+                font-weight: 300;
                 flex: 0 1 60px;
                 text-align: right;
                 color: #fffba7;
@@ -416,7 +462,8 @@ section {
         display: flex;
         position: relative;
 
-        .refresh-listing {
+        .refresh-listing,
+        .add-to-wishlist {
             position: absolute;
             right: 20px;
             border: solid 1px #000;
@@ -436,6 +483,10 @@ section {
                 background-color: #243b60;
                 opacity: 1;
             }
+        }
+
+        .add-to-wishlist {
+            right: 120px;
         }
 
         img {
@@ -493,13 +544,17 @@ section {
             padding: 10px;
         }
 
-        small {
+        > small {
             text-align: center;
             font-size: 13px;
             color: #666;
-            width: 100%;
+            width: 300px;
+            margin: 0 auto 20px auto;
+            border-radius: 50px;
             display: block;
             text-transform: uppercase;
+            padding: 15px;
+            background-color: #121212;
         }
     }
 
@@ -610,13 +665,18 @@ section {
         }
     }
 
+    .market-item-dc {
+        margin: 20px 0;
+    }
+
     .market-item-dc-btn {
         width: 100%;
         border: solid 1px #000;
-        background-color: #144286;
+        background-color: #262831;
         color: #fff;
-        padding: 10px;
-        font-size: 16px;
+        padding: 15px 0;
+        font-size: 18px;
+        font-weight: 300;
         border-radius: 5px;
         box-shadow: 0 1px 5px #000;
         cursor: pointer;
@@ -666,21 +726,28 @@ section {
     .market-category-toggle {
         float: right;
         margin: 0 20px 10px 0;
+        background-image: url("https://xivapi.com/mb/arrow-left-solid.svg");
+        background-position: center;
+        background-repeat: no-repeat;
         background-color: #282828;
         border: solid 1px #000;
         border-radius: 5px;
         color: #aaa;
         box-shadow: 0 1px 3px #000;
-        padding: 4px 12px;
         cursor: pointer;
         outline: none;
+        width: 40px;
+        height: 30px;
+        background-size: 16px auto;
+
+        &.right {
+            background-image: url("https://xivapi.com/mb/arrow-right-solid.svg");
+        }
     }
 }
 footer {
-    font-size: 12px;
+    font-size: 14px;
     color: #555;
-    text-align: center;
-    padding: 20px;
 }
 table {
     width: 100%;
@@ -710,6 +777,12 @@ table {
             &.hq {
                 margin: 4px 0 0 0;
             }
+        }
+
+        span {
+            margin-right: 10px;
+            color: #888;
+            font-size: 14px;
         }
 
         small {
@@ -791,4 +864,33 @@ select {
     border-radius: 5px;
     font-size: 18px;
     line-height: 24px;
+}
+
+//
+// Wishlist
+//
+.wishlist {
+    padding: 0 5px 0 0;
+
+    .wishlist-btn {
+        display: inline-block;
+        padding: 10px;
+        background-color: #555;
+        border-radius: 5px;
+        border: solid 1px #000;
+        box-shadow: 0 1px 4px #111;
+        margin: 8px 5px 0 0;
+        outline: none;
+        cursor: pointer;
+
+        img {
+            border: solid 1px #000;
+            box-shadow: 0 1px 4px #111;
+            border-radius: 5px;
+        }
+
+        &:hover {
+             background-color: #3dafff;
+        }
+    }
 }
