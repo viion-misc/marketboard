@@ -22,6 +22,8 @@ class MarketPricing
         this.view.addClass('on');
         this.uiPrices.html('<div class="loading"><img src="http://xivapi.com/mb/loading.svg"></div>');
         this.uiServers.html('<button class="market-item-dc-btn">Show Cross World Prices</button>');
+        this.uiInfo.html('<div class="loading">loading...</div>');
+        $('.market-item-dc').hide();
 
         clearTimeout(this.pricePerDcTimeout);
         XIVAPI.getItemPrices(itemId, server, response => {
@@ -99,12 +101,13 @@ class MarketPricing
             if (typeof callback !== 'undefined') {
                 callback();
             }
+
+            $('.market-item-dc').show();
         });
 
         // render item info
         XIVAPI.getItem(itemId, item => {
             let html = [];
-            this.uiInfo.html('<div class="loading">loading...</div>');
             window.location.hash = `#${server},${item.ID},${item.ItemSearchCategory.ID}`;
 
             html.push(`<button class="refresh-listing">Refresh</button>`);
@@ -362,6 +365,8 @@ class MarketPricing
 
             // fire statistics
             this.renderHistoryStatistics(response.History);
+
+            this.uiHistory.append('<br><br><small>Cheapest based on total purchased price.</small>');
         });
 
         // watch clicking on "show more"
