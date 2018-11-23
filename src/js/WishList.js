@@ -9,20 +9,16 @@ class WishList
     {
         this.html = $('html');
         this.ui = $('.wishlist .items');
-        this.open = false;
     }
     watch()
     {
         this.html.on('click', '.wishlist button.toggle', event => {
-            this.open = true;
             this.ui.toggleClass('open');
         });
 
         this.html.on('click', '.wishlist-btn', event => {
             // close wishlist
-            this.open = false;
             this.ui.removeClass('open');
-
 
             const data = $(event.currentTarget).attr('id').split(',');
 
@@ -45,16 +41,13 @@ class WishList
     render()
     {
         const wishlist = localStorage.getItem('wishlist');
-
-        console.log(wishlist);
-
         if (wishlist === null || wishlist === '') {
             return;
         }
 
-        this.ui.html('');
-
         XIVAPI.getItemList(wishlist, response => {
+            this.ui.html('');
+
             response.Results.forEach((item, i) => {
                 this.ui.append(`
                     <button class="wishlist-btn" id="${item.ID},${item.ItemSearchCategory.ID}">
