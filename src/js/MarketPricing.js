@@ -105,6 +105,9 @@ class MarketPricing
         XIVAPI.getItem(itemId, item => {
             let html = [];
 
+            window.location.hash = `#${server},${item.ID},${item.ItemSearchCategory.ID}`;
+            console.log(window.location.hash);
+
             html.push(`<button class="refresh-listing">Refresh</button>`);
             html.push(`<button class="add-to-wishlist">Wish List</button>`);
 
