@@ -26,6 +26,7 @@ nav {
     z-index: 50;
     background-color: #222;
     flex: 0 1 250px;
+    min-width: 250px;
     padding-bottom: 100px;
     border-right: solid 1px #000;
     box-shadow: 1px 0 5px #000;
@@ -322,6 +323,7 @@ section {
             border-radius: 0 10px 10px 0;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
             flex: 0 1 500px;
+            min-width: 500px;
             padding: 10px 0;
             display: none;
             position: relative;
