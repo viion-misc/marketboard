@@ -127,8 +127,8 @@ section {
         box-shadow: 0 1px 3px #000;
         border-radius: 0 0 10px 0;
         background-color: #282828;
-        width: 500px;
-        padding: 0 15px;
+        width: 470px;
+        padding: 0 12px 0 18px;
         height: 70px;
         left: 250px;
 
@@ -141,9 +141,9 @@ section {
             line-height: 48px;
             padding: 0 15px;
             border: solid 1px #000;
-            box-shadow: 0 1px 5px #222;
+            box-shadow: 0 1px 5px 2px #222;
             border-radius: 5px;
-            background-color: #515151;
+            background-color: #555;
             margin-top: 10px;
         }
     }
@@ -153,7 +153,7 @@ section {
         z-index: 30;
         box-shadow: 0 1px 3px #000;
         background-color: #282828;
-        width: calc(100% - (300px + 500px));
+        width: calc(100% - (300px + 485px));
         border-radius: 0 0 0 10px;
         right: 0;
         height: 70px;
@@ -326,9 +326,10 @@ section {
     > div.content {
         display: flex;
         margin-top: 90px;
+        padding-bottom: 100px;
 
         > .market-category-stock-ui {
-            background-color: #181818;
+            background-color: #333;
             border: solid 1px #000;
             border-radius: 0 10px 10px 0;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -345,7 +346,7 @@ section {
             }
 
             &.mini {
-                flex: 0 1 80px;
+                flex: 0 1 70px;
 
                 button div:nth-of-type(2) {
                     opacity: 0;
@@ -395,7 +396,7 @@ section {
             outline: none;
 
             &:nth-child(even) {
-                background-color: #222;
+                background-color: #282828;
             }
 
             div:first-of-type {
@@ -467,29 +468,38 @@ section {
             position: absolute;
             right: 20px;
             border: solid 1px #000;
-            background-color: #163039;
+            background-color: #1a53d2;
             color: #fff;
-            padding: 8px 12px;
-            border-radius: 5px;
-            font-size: 13px;
+            padding: 0 15px;
+            border-radius: 50px;
+            font-size: 15px;
+            line-height: 38px;
             text-transform: uppercase;
             outline: none;
             cursor: pointer;
             box-shadow: 0 1px 3px #000;
             transition: .1s;
-            opacity: 0.6;
 
             &:hover, &:focus, &:active {
-                background-color: #243b60;
+                background-color: #1845a5;
                 opacity: 1;
+            }
+
+            img {
+                box-shadow: none;
+                width: 20px;
+                height: 20px;
+                vertical-align: middle;
+                flex: none;
+                margin: 0 8px 2px 0;
             }
         }
 
         .add-to-wishlist {
-            right: 120px;
+            right: 130px;
         }
 
-        img {
+        > img {
             flex: 0 1 40px;
             width: 40px;
             height: 40px;
@@ -725,7 +735,7 @@ section {
 
     .market-category-toggle {
         float: right;
-        margin: 0 20px 10px 0;
+        margin: 0 16px 10px 0;
         background-image: url("https://xivapi.com/mb/arrow-left-solid.svg");
         background-position: center;
         background-repeat: no-repeat;
@@ -841,10 +851,15 @@ select {
     border: solid 1px #000;
     padding: 8px;
     color: #222;
-    background-color: #eee;
-    border-radius: 5px;
-    box-shadow: 0 1px 2px #000;
+    background-color: #ddd;
+    border-radius: 50px;
+    box-shadow: 0 1px 4px 2px #000;
     cursor: pointer;
+    outline: none;
+
+    &:hover {
+        background-color: #eee;
+    }
 }
 //
 // Misc
@@ -870,18 +885,25 @@ select {
 // Wishlist
 //
 .wishlist {
-    padding: 0 5px 0 0;
+    padding: 0 10px 0 0;
 
     .wishlist-btn {
         display: inline-block;
-        padding: 5px;
+        padding: 5px 8px;
         background-color: #555;
-        border-radius: 10px;
         border: solid 1px #000;
         box-shadow: 0 1px 4px #111;
-        margin: 8px 5px 0 0;
+        margin: 8px 0 0 0;
         outline: none;
         cursor: pointer;
+
+        &:first-of-type {
+            border-radius: 5px 0 0 5px;
+        }
+
+        &:last-of-type {
+            border-radius: 0 5px 5px 0;
+        }
 
         img {
             border: solid 1px #000;
@@ -890,7 +912,7 @@ select {
         }
 
         &:hover {
-             background-color: #3dafff;
+             background-color: #1a53d2;
         }
     }
 }

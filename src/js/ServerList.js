@@ -1,4 +1,6 @@
 import XIVAPI from './XIVAPI';
+import MarketPricing from "./MarketPricing";
+import MarketCategoryStock from "./MarketCategoryStock";
 
 class ServerList
 {
@@ -68,8 +70,27 @@ class ServerList
             const server = $(event.currentTarget).val();
             localStorage.setItem(this.localeStorageKey, server);
 
-            // reload page
-            location.reload();
+            // check for hash, then we can just reload it with the new server
+            if (window.location.hash) {
+                let preloadItem = window.location.hash.replace('#', '').split(',');
+
+                $('.home').removeClass('on');
+
+                // show market category and show pricing
+                MarketPricing.renderHistory(preloadItem[1]);
+                MarketPricing.renderPrices(preloadItem[1]);
+                MarketCategoryStock.listCategoryStock(preloadItem[2], () => {
+                    // set ui selected elements
+                    $(`.market-categories button#${preloadItem[2]}`).addClass('on');
+                    $(`.market-category-stock button#${preloadItem[1]}`).addClass('on');
+                });
+
+                // move to top
+                window.scrollTo(0,0);
+            } else {
+                // reload page
+                location.reload();
+            }
         });
     }
 }

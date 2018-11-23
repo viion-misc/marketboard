@@ -104,12 +104,11 @@ class MarketPricing
         // render item info
         XIVAPI.getItem(itemId, item => {
             let html = [];
-
+            this.uiInfo.html('<div class="loading">loading...</div>');
             window.location.hash = `#${server},${item.ID},${item.ItemSearchCategory.ID}`;
-            console.log(window.location.hash);
 
             html.push(`<button class="refresh-listing">Refresh</button>`);
-            html.push(`<button class="add-to-wishlist">Wish List</button>`);
+            html.push(`<button class="add-to-wishlist"><img src="https://xivapi.com/mb/heart-regular_light.svg" height="18">Wish List</button>`);
 
             // todo - wtb template engine..
             html.push(`<img src="${Icon.get(item.Icon)}">`);
