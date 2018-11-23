@@ -48,7 +48,7 @@ class MarketPricing
                             <td>${price.Quantity}</td>
                             <td align="center">${price.IsHQ ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png" class="hq">' : ''}</td>
                             <td align="right">
-                                <span>${price.RetainerName}4</span>
+                                <span>${price.RetainerName}</span>
                                 <img src="${Icon.get(price.Town.Icon)}">
                             </td>
                         </tr>
