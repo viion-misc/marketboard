@@ -3,6 +3,7 @@
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125096878-2"></script>
         <script>
+            let loading = false;
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -10,19 +11,32 @@
         </script>
 
         <title>MOGBOARD</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <link rel="shortcut icon" type="image/png" href="https://raw.githubusercontent.com/viion/marketboard/master/favicon.png">
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/8.15.0/lazyload.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
     </head>
     <body>
+        <div class="wishlist">
+            <div class="top">
+                <button class="toggle"><img src="https://xivapi.com/mb/heart-regular_light.svg" height="18"> Wishlist</button>
+            </div>
+            <div class="items">
+                <div class="loading">loading...</div>
+            </div>
+        </div>
+
         <main>
             <nav>
 
                 <div class="logo">
-                    <img src="mog.png">
+                    <a href="/"><img src="mog.png"></a>
                     <h1><span>MOG</span>BOARD</h1>
                 </div>
 
@@ -31,22 +45,17 @@
                     <select class="server-select-box"></select>
                 </div>
 
+                <div class="language">
+                    <button id="en"><img src="http://xivapi.com/mb/english.png" height="24"></button>
+                    <button id="de"><img src="http://xivapi.com/mb/german.png" height="24"></button>
+                    <button id="fr"><img src="http://xivapi.com/mb/french.png" height="24"></button>
+                    <button id="ja"><img src="http://xivapi.com/mb/japanese.png" height="24"></button>
+                </div>
+
                 <hr>
 
                 <!-- Market Categories -->
                 <div class="market-categories"></div>
-
-                <footer>
-                    <p>
-                        <a href="https://github.com/viion/marketboard" target="_blank">GitHub Code</a>
-                    </p>
-                    <p>
-                        <a href="https://xivapi.com/docs/Market" target="_blank">Market APi Docs</a>
-                    </p>
-                    <p style="padding: 0 15px;">
-                        ALL FINAL FANTASY XIV CONTENT IS PROPERTY OF SQUARE ENIX CO., LTD
-                    </p>
-                </footer>
 
             </nav>
             <section>
@@ -59,45 +68,120 @@
                 </div>
 
                 <div class="home on">
-                    <h1>Welcome to MogBoard!</h1>
-                    <p>
-                        <strong>MogBoard</strong> is a small one page site that provides
-                        real-time access to the FFXIV Market Board for any server**,
-                        any time. The page is fully open source and uses XIVAPI.com to
-                        interact with the Companion API.
-                    </p>
-                    <p>
-                        If you are interested in using Market Board information on your site, please
-                        have a look at the docs here:
-                        <a href="https://xivapi.com/docs/Market" target="_blank">XIVAPI Market</a>
-                    </p>
-                    <p>
-                        If you fancy messing with this page and hosting your own, you can find
-                        the source code here:
-                        <a href="https://github.com/viion/marketboard" target="_blank">Github: viion/marketboard</a>
-                    </p>
+                    <div>
+                        <h1>Welcome to MogBoard!</h1>
+                        <p>
+                            MogBoard is a small one page site that provides real-time access to the
+                            FFXIV Market Board for any server<small>**</small>, any time. The page is fully open source and uses
+                            XIVAPI.com to interact with the Companion API.
+                        </p>
+                        <p>
+                            If you are interested in using Market Board information on your site, please have a look at the docs here:
+                            <a href="https://xivapi.com/docs/Market" target="_blank">XIVAPI Market</a>.
+                            If you fancy messing with this page and hosting your own, you can find the source code here:
+                            <a href="https://github.com/viion/marketboard" target="_blank">Github: viion/marketboard</a>.
+                        </p>
+                        <hr>
 
-                    <br><br>
+                        <div class="beta">
+                            <h4>beta, beta, beta</h4>
+                            This site is heavily in beta right now, deciding on features, seeing what works.
+                            Things may go wonky from time to time! If you have an issue, please join the discord
+                            and shout at Vekien#3458 :D
+                        </div>
 
-                    <p>
-                        <small>ALL FINAL FANTASY XIV CONTENT IS PROPERTY OF SQUARE ENIX CO., LTD</small>
-                    </p>
+                        <h3>Frequently Asked Questions</h3>
+                        <p>
+                            <strong>Why is my server not working?</strong><br>
+                            This is likely
+                            because the server is congested and not accepting new characters at this
+                            time. The site works by having a dedicated login to the Companion API
+                            to be able to query the market place on-demand. Once the server becomes
+                            unlocked, it will work automatically.
+                            <br><br>
+                            If you do have a *spare* account on a locked server, I would be very much
+                            interested in talking with you! Join the Discord and message an admin!
+                        </p>
+                        <p>
+                            <strong>Why do items I've bought still show up?</strong><br>
+                            The companion
+                            app API takes some time to update and reflect what has been purchased, this
+                            can take a couple minutes. The API has a 15 second cache, so just refresh
+                            the listing after a few minutes.
+                        </p>
+                        <p>
+                            <strong>I see some differences in-game vs the site</strong><br>
+                            This can happen and unfortunately it is out of my control. All data comes from
+                            SE via the Companion App and when differences appear it is an issue on
+                            their end, this either could be a caching issue or some other bug. I am
+                            very interested in hearing about these so please post them on the Discord!
+                        </p>
+                        <p>
+                            <strong>How do I get the Market data for my own project?</strong><br>
+                            This whole site is open source, you can take it and do whatever you like with it.
+                            <br><br>
+                            If you're interested in the API you can view the documentation here:
+                            <a href="https://xivapi.com/docs/Market">https://xivapi.com/docs/Market</a> -
+                            you can also view the network traffic in your browsers Dev Tools to have a
+                            peak at how I'm using the API!
+                            <br><br>
+                            If you are just more keen to learn about the companion API and bypass
+                            XIVAPI completely, have a look at my <a href="https://github.com/viion/ffxiv-datamining/blob/master/docs/CompanionAppApi.md">Research doc on Github</a>.
+                        </p>
+                        <p>
+                            <strong>Do I need to download anything?</strong><br>
+                            No, everything is on demand, real-time, handled by us!
+                        </p>
+                        <p>
+                            <strong>Will you have ads?</strong><br>
+                            No.
+                        </p>
 
-                    <hr>
+                        <hr>
 
-                    <p>** Unfortunately, due to server congestions the following servers will not work:</p>
-                    <ul>
-                        <li>[NA] Balmung</li>
-                        <li>[JP] Gungnir</li>
-                        <li>[JP] Bahamut</li>
-                        <li>[JP] Chocobo</li>
-                        <li>[JP] Mandragora</li>
-                        <li>[JP] Shinryu</li>
-                    </ul>
+                        <small>
+                            ** Unfortunately, due to server congestion; the following servers will not work:
+                            <ul>
+                                <li>[NA] Balmung</li>
+                                <li>[JP] Gungnir</li>
+                                <li>[JP] Bahamut</li>
+                                <li>[JP] Chocobo</li>
+                                <li>[JP] Mandragora</li>
+                                <li>[JP] Shinryu</li>
+                            </ul>
+                        </small>
+
+                        <hr>
+
+                        <footer>
+                            <p>
+                                Mogboard and XIVAPI by: Vekien, <em>aka</em> Premium Virtue (Phoenix)
+                                <br>
+                                <a href="https://github.com/viion/marketboard" target="_blank">GitHub Code</a>
+                                &nbsp; - &nbsp;
+                                <a href="https://xivapi.com/docs/Market" target="_blank">Market APi Docs</a>
+                                <br><br>
+                                ALL FINAL FANTASY XIV CONTENT IS PROPERTY OF SQUARE ENIX CO., LTD
+                            </p>
+                        </footer>
+                    </div>
+                    <div>
+                        <div>
+                            <p>You can support this project and many more, by being a patron!</p>
+                            <div>
+                                <a href="https://www.patreon.com/bePatron?u=13230932" data-patreon-widget-type="become-patron-button">Become a Patron!</a>
+                                <script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+                            </div>
+                        </div>
+                        <br><hr><br>
+                        <iframe src="https://discordapp.com/widget?id=474518001173921794&theme=dark" width="350" height="440" allowtransparency="true" frameborder="0"></iframe>
+                    </div>
                 </div>
 
                 <div class="content">
                     <div class="market-category-stock-ui">
+                        <!-- toggle stock view -->
+                        <button class="market-category-toggle"></button>
                         <!-- Market Stock Listing (Item+Quantity) -->
                         <div class="market-category-stock"></div>
                     </div>
@@ -108,14 +192,19 @@
                         <!-- Market Prices for selected item -->
                         <div class="market-item-prices"></div>
 
+                        <!-- Market Price Per Server -->
+                        <div class="market-item-dc"></div>
+
                         <!-- Market Price History for selected item -->
                         <div class="market-item-history"></div>
+
+
                     </div>
                 </div>
 
             </section>
         </main>
 
-        <script src="./app.js"></script>
+        <script src="./app.js?v=0.8.8456"></script>
     </body>
 </html>

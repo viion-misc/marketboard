@@ -7,9 +7,14 @@ html {
     background-attachment: fixed;
     color: #ccc;
     font-size: 16px;
+    text-shadow: 0 1px 2px #000;
+    min-width: 1000px;
 }
 a {
     color: #ffcafd;
+}
+em {
+    font-style: italic;
 }
 //
 // Layout
@@ -20,9 +25,9 @@ main {
 nav {
     position: relative;
     z-index: 50;
-
-    background-color: #333;
-    flex: 0 1 300px;
+    background-color: #222;
+    flex: 0 1 250px;
+    min-width: 250px;
     padding-bottom: 100px;
     border-right: solid 1px #000;
     box-shadow: 1px 0 5px #000;
@@ -37,13 +42,13 @@ nav {
     button {
         width: 100%;
         display: flex;
-        background-color: transparent;
+        background-color: #333;
         border: none;
-        padding: 10px;
+        padding: 6px 0 4px 6px;
         color: #fff;
         text-align: left;
         border-bottom: solid 1px #000;
-        font-size: 16px;
+        font-size: 14px;
         text-shadow: 0 1px 2px #000;
         transition: .1s;
         line-height: 24px;
@@ -66,19 +71,30 @@ nav {
     }
 
     .logo {
-        text-align: center;
-        padding: 20px 0;
+        display: flex;
+        margin-bottom: 20px;
+        margin-top: 10px;
 
-        img {
-            height: 80px;
+        > a {
+            flex: 0 1 100px;
+            display: inline-block;
+            text-align: center;
+
+            img {
+                height: 80px;
+                margin-top: -30px;
+            }
         }
 
         h1 {
-            font-size: 30px;
-            font-weight: 700;
+            flex: 0 1 180px;
+            font-size: 24px;
+            font-weight: 300;
             color: #fff;
+            margin-top: 15px;
 
             span {
+                font-weight: 400;
                 color: yellow;
             }
         }
@@ -86,30 +102,37 @@ nav {
 
     .server {
         text-align: center;
-        padding: 0 0 20px 0;
+        padding: 0 0 10px 0;
     }
 
     .market-categories {
-        div {
-            border-bottom: solid 10px #000;
+        h3 {
+            background-color: #222;
+            color: #555;
+            font-size: 16px;
+            padding: 8px;
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: 5px;
+            border-top: solid 1px #000;
+            border-bottom: solid 1px #000;
         }
-    }
-
-    p {
-        margin-bottom: 15px;
     }
 }
 section {
-    flex: 0 1 calc(100% - 300px);
+    flex: 0 1 calc(100% - 250px);
 
     .search {
-        position: relative;
+        position: absolute;
         z-index: 30;
         box-shadow: 0 1px 3px #000;
-        background-color: #333;
-        width: 500px + 660px;
-        padding: 10px;
-        border-radius: 0 0 6px 0;
+        border-radius: 0 0 10px 0;
+        background-color: #282828;
+        width: 470px;
+        padding: 0 12px 0 18px;
+        height: 70px;
+        left: 250px;
 
         input {
             width: 100%;
@@ -120,15 +143,21 @@ section {
             line-height: 48px;
             padding: 0 15px;
             border: solid 1px #000;
-            box-shadow: 0 1px 5px #222;
-            border-radius: 3px;
-            background-color: #515151;
+            box-shadow: 0 1px 5px 2px #222;
+            border-radius: 5px;
+            background-color: #555;
+            margin-top: 10px;
         }
     }
 
     .search-results {
         margin: 0 -10px;
         display: none;
+        background-color: #333;
+        margin: 10px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 15px 5px #000;
 
         &.on {
             display: block;
@@ -208,21 +237,54 @@ section {
         box-shadow: 0 1px 3px #000;
         background-color: #151515;
         width: 500px + 580px;
-        padding: 60px 50px 50px 50px;
+        padding: 100px 50px 50px 50px;
         border-radius: 0 0 6px 0;
-        margin-top: -10px;
         display: none;
         font-size: 18px;
         line-height: 24px;
 
+        .beta {
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #262626;
+            margin-bottom: 30px;
+
+            h4 {
+                font-size: 26px;
+                font-weight: 300;
+                margin-bottom: 15px;
+            }
+        }
+
         &.on {
-            display: block;
+            display: flex;
+        }
+
+        > div:first-of-type {
+            flex: 0 1 calc(100% - 350px);
+            padding-right: 50px;
+        }
+
+        > div:last-of-type {
+            flex: 0 1 350px;
         }
 
         h1 {
             font-size: 32px;
             font-weight: 300;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: #ed6fff;
+        }
+
+        strong {
+            color: #e2ec7a;
+            font-weight: 800;
         }
 
         p {
@@ -240,56 +302,94 @@ section {
             font-size: 14px;
             color: #666;
         }
+
+        ul {
+            display: block;
+            list-style: square inside;
+
+            li {
+                margin-left: 30px;
+            }
+        }
     }
 
     > div.content {
         display: flex;
+        margin-top: 90px;
+        padding-bottom: 100px;
 
         > .market-category-stock-ui {
-            background-color: #181818;
+            background-color: #333;
             border: solid 1px #000;
-            border-radius: 0 0 5px 0;
-            box-shadow: 0 1px 10px rgba(0,0,0,0.3);
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
             flex: 0 1 500px;
+            min-width: 500px;
             padding: 10px 0;
             display: none;
+            position: relative;
+            z-index: 15;
+            overflow: hidden;
+            transition: .2s;
 
             &.on {
                 display: block;
+            }
+
+            &.mini {
+                flex: 0 1 70px;
+                min-width: 70px;
+
+                button div:nth-of-type(2) {
+                    opacity: 0;
+                }
             }
         }
 
         > .item-market-ui {
-            background-color: #080808;
+            background-color: #1c1c1c;
             border: solid 1px #000;
-            border-radius: 0 0 5px 0;
-            box-shadow: 0 1px 10px rgba(0,0,0,0.3);
-            flex: 0 1 680px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 15;
+            flex: 0 1 calc(100% - 600px);
             display: none;
+            margin-left: 20px;
+            border-radius: 10px;
+            min-width: 750px;
 
             &.on {
                 display: block;
             }
         }
+
+        > .item-wishlist {
+            background-color: #333;
+            flex: 0 1 100px;
+            border-radius: 0 0 5px 0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
     }
 
     .market-category-stock {
+        width: 500px;
+
         button {
             width: 100%;
             display: flex;
-            line-height: 50px;
+            line-height: 40px;
             border: none;
             border-bottom: solid 1px #000;
             color: #fff;
             background-color: transparent;
             text-align: left;
             padding: 0 20px;
-            font-size: 18px;
+            font-size: 16px;
             transition: .1s;
             outline: none;
 
             &:nth-child(even) {
-                background-color: #222;
+                background-color: #282828;
             }
 
             div:first-of-type {
@@ -298,19 +398,19 @@ section {
                 span {
                     border-radius: 5px;
                     box-shadow: 0 1px 3px #000;
-                    margin: 5px 0 0 0;
+                    margin: 7px 0 0 0;
 
                     position: relative;
                     display: block;
-                    width: 40px;
-                    height: 40px;
+                    width: 26px;
+                    height: 26px;
                     overflow: hidden;
                 }
 
                 img {
                     position: absolute;
-                    width: 40px;
-                    height: 40px;
+                    width: 26px;
+                    height: 26px;
                     left: 0;
                     top: 0;
                 }
@@ -318,11 +418,11 @@ section {
 
             div:last-of-type {
                 flex: 0 1 calc(100% - 100px);
-                padding-left: 10px;
             }
 
             span {
-                font-size: 20px;
+                font-size: 16px;
+                font-weight: 300;
                 flex: 0 1 60px;
                 text-align: right;
                 color: #fffba7;
@@ -354,8 +454,45 @@ section {
     .item-info {
         padding: 30px 0 10px 30px;
         display: flex;
+        position: relative;
 
-        img {
+        .refresh-listing,
+        .add-to-wishlist {
+            position: absolute;
+            right: 20px;
+            border: solid 1px #000;
+            background-color: #1a53d2;
+            color: #fff;
+            padding: 0 15px;
+            border-radius: 50px;
+            font-size: 15px;
+            line-height: 38px;
+            text-transform: uppercase;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 1px 3px #000;
+            transition: .1s;
+
+            &:hover, &:focus, &:active {
+                background-color: #1845a5;
+                opacity: 1;
+            }
+
+            img {
+                box-shadow: none;
+                width: 20px;
+                height: 20px;
+                vertical-align: middle;
+                flex: none;
+                margin: 0 8px 2px 0;
+            }
+        }
+
+        .add-to-wishlist {
+            right: 130px;
+        }
+
+        > img {
             flex: 0 1 40px;
             width: 40px;
             height: 40px;
@@ -397,8 +534,9 @@ section {
     }
 
     .market-item-prices,
-    .market-item-history {
-        padding: 20px;
+    .market-item-history,
+    .market-item-dc {
+        padding: 5px 20px;
 
         h2 {
             font-size: 18px;
@@ -408,13 +546,221 @@ section {
             text-align: center;
             padding: 10px;
         }
+
+        > small {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            width: 300px;
+            margin: 0 auto 20px auto;
+            border-radius: 50px;
+            display: block;
+            text-transform: uppercase;
+            padding: 15px;
+            background-color: #121212;
+        }
+    }
+
+    .market-item-history-stats {
+        display: flex;
+
+        h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: #5ea2dc;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+
+            padding: 10px;
+            text-align: center;
+            background-color: #222;
+            border-radius: 3px;
+        }
+
+        h3 {
+            font-size: 12px;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        > div {
+            flex: 0 1 50%;
+            margin-bottom: 5px;
+            text-align: center;
+
+            &:first-of-type {
+                margin-right: 2px;
+            }
+
+            &:last-of-type {
+                margin-left: 2px;
+            }
+
+            > div {
+                display: flex;
+
+                > div {
+                    flex: 0 1 33%;
+                    padding: 10px;
+                    text-align: center;
+                    background-color: #222;
+                    border-radius: 3px;
+
+                    &:nth-of-type(2) {
+                        margin: 0 4px;
+                    }
+                }
+            }
+        }
+    }
+
+    .market-item-history-chart {
+        padding: 10px;
+        background-color: #222;
+        border-radius: 3px;
+        margin-bottom: 5px;
+    }
+
+    .market-item-prices-cheap {
+        font-size: 16px;
+        font-weight: 400;
+        color: #666;
+        text-transform: uppercase;
+
+        background-color: #181818;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        line-height: 24px;
+        display: flex;
+        overflow: hidden;
+
+        > div {
+            flex: 0 1 50%;
+            padding: 5px 10px;
+
+            &:first-of-type {
+                background-color: #162e20;
+                border-right: solid 1px #000;
+            }
+
+            &:last-of-type {
+                background-color: #331d18;
+                border-left: solid 1px #000;
+                text-align: right;
+            }
+        }
+
+        img {
+            vertical-align: middle;
+            margin: 0 0 2px 0;
+        }
+
+        span {
+            color: #c5c574;
+        }
+
+        strong {
+            display: inline-block;
+            font-weight: 900;
+            color: #818181;
+            width: 55px;
+        }
+    }
+
+    .market-item-dc {
+        margin: 20px 0;
+        background-color: #080808;
+        padding: 20px;
+        border-top: solid 1px #000;
+        border-bottom: solid 1px #000;
+    }
+
+    .market-item-dc-btn {
+        width: 100%;
+        border: solid 1px #000;
+        background-color: #263e20;
+        color: #fff;
+        padding: 15px 0;
+        font-size: 18px;
+        font-weight: 300;
+        border-radius: 5px;
+        box-shadow: 0 1px 5px #000;
+        cursor: pointer;
+        transition: .2s;
+
+        &:hover, &:active, &:focus {
+            background-color: #285d1f;
+        }
+    }
+
+    .max-size {
+        max-height: 400px;
+        overflow: hidden;
+        border-radius: 0 0 5px 5px;
+        position: relative;
+
+        .show-more {
+            position: absolute;
+            bottom: 0; left: 0; right: 10px;
+            width: 100%;
+            display: block;
+            line-height: 32px;
+            font-size: 14px;
+            text-transform: uppercase;
+            border: none;
+            color: #888;
+            background-color: #282828;
+            box-shadow: 0 0 10px 1px #000;
+            outline: none;
+            transition: .1s;
+
+            &:hover, &:focus, &:active {
+                background-color: #181818;
+                cursor: pointer;
+            }
+        }
+
+        &.off {
+            max-height: 100%;
+
+            .show-more {
+                display: none;
+            }
+        }
+    }
+
+    .market-category-toggle {
+        float: right;
+        margin: 0 16px 10px 0;
+        background-image: url("https://xivapi.com/mb/arrow-left-solid.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: #282828;
+        border: solid 1px #000;
+        border-radius: 5px;
+        color: #aaa;
+        box-shadow: 0 1px 3px #000;
+        cursor: pointer;
+        outline: none;
+        width: 40px;
+        height: 30px;
+        background-size: 16px auto;
+
+        &.right {
+            background-image: url("https://xivapi.com/mb/arrow-right-solid.svg");
+        }
+    }
+
+    .sort-info {
+        margin-top: 8px;
+        font-size: 14px;
+        color: #aaa;
     }
 }
 footer {
-    font-size: 12px;
+    font-size: 14px;
     color: #555;
-    text-align: center;
-    padding: 20px;
 }
 table {
     width: 100%;
@@ -430,11 +776,11 @@ table {
             border-right: none;
         }
 
-        &:nth-of-type(1) {
-            color: yellow;
+        &.price {
+            color: #c5c574;
         }
 
-        &:nth-of-type(2) {
+        &.title {
             font-weight: 600;
         }
 
@@ -445,10 +791,33 @@ table {
                 margin: 4px 0 0 0;
             }
         }
+
+        span {
+            margin-right: 10px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        small {
+            color: #555;
+            text-align: center;
+        }
     }
 
     tr {
         border-bottom: solid 2px #000;
+
+        &:hover {
+            background-color: #161616;
+        }
+
+        &.cheapest {
+            background-color: #162e20;
+        }
+
+        &.expensive {
+            background-color: #331d18;
+        }
     }
 
     th {
@@ -458,10 +827,32 @@ table {
         text-align: left;
         font-size: 13px;
         text-transform: uppercase;
-        box-shadow: 0 1px 2px #000;
-        background-color: #181818;
-        color: #3dafff;
+        background-color: #111;
+        color: #fff98a;
         font-weight: 600;
+
+        &.sortable {
+            text-decoration: underline;
+        }
+
+        &.sortable:hover {
+            background-color: #333;
+            cursor: pointer;
+        }
+    }
+}
+.market-item-dc tr.cheapest {
+    background-color: #162e20;
+
+    td:nth-of-type(5), td:nth-of-type(6) {
+        background-color: #1a412f;
+    }
+}
+.market-item-dc tr.expensive {
+    background-color: #331d18;
+
+    td:nth-of-type(3), td:nth-of-type(4) {
+        background-color: #4a2e1e;
     }
 }
 //
@@ -471,10 +862,15 @@ select {
     border: solid 1px #000;
     padding: 8px;
     color: #222;
-    background-color: #eee;
-    border-radius: 5px;
-    box-shadow: 0 1px 2px #000;
+    background-color: #ddd;
+    border-radius: 50px;
+    box-shadow: 0 1px 4px 2px #000;
     cursor: pointer;
+    outline: none;
+
+    &:hover {
+        background-color: #eee;
+    }
 }
 //
 // Misc
@@ -484,4 +880,116 @@ select {
     text-align: center;
     font-size: 24px;
     color: #555;
+}
+.error {
+    margin: 50px 20px 20px 20px;
+    background-color: #313131;
+    border: solid 2px coral;
+    box-shadow: inset 0 0 20px #686868;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+//
+// Wishlist
+//
+.wishlist {
+    position: absolute;
+    z-index: 300;
+    box-shadow: 0 0 15px 5px #000;
+    background-color: #222;
+    width: 300px;
+    border-radius: 0 0 10px 10px;
+    left: 775px;
+    text-align: right;
+    padding: 0 0 10px 0;
+
+    .items {
+        display: none;
+
+        &.open {
+            display: block;
+            padding-top: 5px;
+        }
+    }
+
+    .top {
+        text-align: center;
+        padding: 15px 15px 5px 15px;
+    }
+
+    .toggle {
+        background-color: #1a53d2;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 1px 5px #000;
+        padding: 0 12px;
+        line-height: 40px;
+        font-size: 16px;
+        outline: none;
+        cursor: pointer;
+        width: 100%;
+
+        img {
+            vertical-align: middle;
+            margin: 0 5px 2px 0;
+        }
+    }
+
+    .wishlist-btn {
+        display: block;
+        padding: 0 5px;
+        color: #fff;
+        background-color: #333;
+        border: none;
+        border-bottom: solid 1px #000;
+        outline: none;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        line-height: 38px;
+        margin: 0;
+
+        img {
+            border: solid 1px #000;
+            box-shadow: 0 1px 4px #111;
+            border-radius: 5px;
+            height: 24px;
+            vertical-align: middle;
+            margin: 0 8px 0 0;
+        }
+
+        &:hover {
+             background-color: #1a53d2;
+        }
+    }
+}
+
+//
+// Language
+//
+.language {
+    text-align: center;
+    padding-bottom: 10px;
+
+    > button {
+        width: auto;
+        display: inline-block;
+        padding: 0;
+        border-radius: 10px;
+        margin: 0 8px;
+
+        &:hover {
+            box-shadow: 0 0 0 3px #3dafff;
+            background-color: #3dafff;
+        }
+
+        img {
+            flex: none;
+            margin: 0;
+        }
+    }
 }
