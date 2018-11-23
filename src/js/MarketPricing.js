@@ -364,7 +364,7 @@ class MarketPricing
                             <td class="price">${numeral(price.PricePerUnit).format('0,0')}</td>
                             <td>${price.Quantity}</td>
                             <td align="center">${price.IsHQ ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png" class="hq">' : ''}</td>
-                            <td align="right">${moment.unix(price.PurchaseDate).fromNow()}</td>
+                            <td align="right">${moment.unix(price.PurchaseDate).format('Do MMM, HH:mm:ss')}</td>
                         </tr>
                     `);
                 });
@@ -453,9 +453,9 @@ class MarketPricing
             //
             // chart
             //
-            statistics.PriceTotalSalesKeys.push(moment.unix(price.PurchaseDate).fromNow(true));
+            statistics.PriceTotalSalesKeys.push(moment.unix(price.PurchaseDate).format('Do MMM, HH:mm'));
             statistics.PriceTotalSalesValues.push(price.PriceTotal);
-            statistics.PricePerUnitSalesKeys.push(moment.unix(price.PurchaseDate).fromNow(true));
+            statistics.PricePerUnitSalesKeys.push(moment.unix(price.PurchaseDate).format('Do MMM, HH:mm'));
             statistics.PricePerUnitSalesValues.push(price.PricePerUnit);
         });
 

@@ -145,6 +145,7 @@ class ServerList
         this.ui.on('change', event => {
             const server = $(event.currentTarget).val();
             localStorage.setItem(this.localeStorageKey, server);
+            this.setUserServer();
 
             // check for hash, then we can just reload it with the new server
             if (window.location.hash) {
