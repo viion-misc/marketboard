@@ -31,7 +31,9 @@ class WishList
         const $ui = $('.wishlist');
         const wishlist = localStorage.getItem('wishlist');
 
-        if (wishlist === null) {
+        console.log(wishlist);
+
+        if (wishlist === null || wishlist === '') {
             $ui.html('<span>Wishlist</span>');
             return;
         }
