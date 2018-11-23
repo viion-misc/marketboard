@@ -1,10 +1,12 @@
 class XIVAPI
 {
     get(endpoint, queries, callback) {
+        loading = true;
 
         queries = queries ? queries : {};
         queries.key = 'f0ef8bd32a004f1daf0d53b1';
         queries.tags = 'mogboard';
+        queries.language = localStorage.getItem('language');
 
         let query = Object.keys(queries)
             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(queries[k]))
@@ -14,7 +16,10 @@ class XIVAPI
 
         fetch (`https://xivapi.com${endpoint}`, { mode: 'cors' })
             .then(response => response.json())
-            .then(data => callback(data))
+            .then(data => {
+                loading = false;
+                callback(data);
+            })
     }
 
     /**

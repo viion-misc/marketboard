@@ -3,6 +3,7 @@
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125096878-2"></script>
         <script>
+            let loading = false;
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -32,6 +33,13 @@
                     <select class="server-select-box"></select>
                 </div>
 
+                <div class="language">
+                    <button id="en"><img src="http://xivapi.com/mb/english.png" height="24"></button>
+                    <button id="de"><img src="http://xivapi.com/mb/german.png" height="24"></button>
+                    <button id="fr"><img src="http://xivapi.com/mb/french.png" height="24"></button>
+                    <button id="ja"><img src="http://xivapi.com/mb/japanese.png" height="24"></button>
+                </div>
+
                 <hr>
 
                 <!-- Market Categories -->
@@ -48,6 +56,10 @@
                 </div>
 
                 <div class="wishlist">
+                    <div class="top">
+                        <button class="toggle"><img src="https://xivapi.com/mb/heart-regular_light.svg" height="18"> Wishlist</button>
+                    </div>
+                    <div class="items"></div>
                 </div>
 
                 <div class="home on">

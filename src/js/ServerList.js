@@ -6,13 +6,93 @@ class ServerList
 {
     constructor()
     {
+        this.servers = {
+            "Aether": [
+                "Adamantoise",
+                "Balmung",
+                "Cactuar",
+                "Coeurl",
+                "Faerie",
+                "Gilgamesh",
+                "Goblin",
+                "Jenova",
+                "Mateus",
+                "Midgardsormr",
+                "Sargatanas",
+                "Siren",
+                "Zalera"
+            ],
+            "Chaos": [
+                "Cerberus",
+                "Lich",
+                "Louisoix",
+                "Moogle",
+                "Odin",
+                "Omega",
+                "Phoenix",
+                "Ragnarok",
+                "Shiva",
+                "Zodiark"
+            ],
+            "Elemental": [
+                "Aegis",
+                "Atomos",
+                "Carbuncle",
+                "Garuda",
+                "Gungnir",
+                "Kujata",
+                "Ramuh",
+                "Tonberry",
+                "Typhon",
+                "Unicorn"
+            ],
+            "Gaia": [
+                "Alexander",
+                "Bahamut",
+                "Durandal",
+                "Fenrir",
+                "Ifrit",
+                "Ridill",
+                "Tiamat",
+                "Ultima",
+                "Valefor",
+                "Yojimbo",
+                "Zeromus"
+            ],
+            "Mana": [
+                "Anima",
+                "Asura",
+                "Belias",
+                "Chocobo",
+                "Hades",
+                "Ixion",
+                "Mandragora",
+                "Masamune",
+                "Pandaemonium",
+                "Shinryu",
+                "Titan"
+            ],
+            "Primal": [
+                "Behemoth",
+                "Brynhildr",
+                "Diabolos",
+                "Excalibur",
+                "Exodus",
+                "Famfrit",
+                "Hyperion",
+                "Lamia",
+                "Leviathan",
+                "Malboro",
+                "Ultros"
+            ]
+        };
+
         this.localeStorageKey = 'server';
         this.localeStorageDcKey = 'dc';
         this.localeStorageDcServersKey = 'dc_servers';
         this.defaultServer = 'Phoenix';
         this.ui = $('.server-select-box');
         this.serverToDc = {};
-        this.dcToServers = {}
     };
 
     /**
@@ -20,28 +100,24 @@ class ServerList
      */
     setServerList()
     {
-        XIVAPI.getServerList(response => {
-            this.dcToServers = response;
-
-            // loop through each data center
-            response.forEach((servers, dataCenter) => {
-                // build options html
-                let serverGroup = [];
-                servers.forEach(server => {
-                    serverGroup.push(`<option value="${server}">${server}</option>`);
-                    this.serverToDc[server] = dataCenter;
-                });
-
-                // add options
-                this.ui.append(
-                    `<optgroup label="${dataCenter}">${serverGroup.join('')}</optgroup>`
-                );
-
+        // loop through each data center
+        this.servers.forEach((servers, dataCenter) => {
+            // build options html
+            let serverGroup = [];
+            servers.forEach(server => {
+                serverGroup.push(`<option value="${server}">${server}</option>`);
+                this.serverToDc[server] = dataCenter;
             });
 
-            // set users server
-            this.setUserServer();
+            // add options
+            this.ui.append(
+                `<optgroup label="${dataCenter}">${serverGroup.join('')}</optgroup>`
+            );
+
         });
+
+        // set users server
+        this.setUserServer();
     }
 
     /**
@@ -55,7 +131,7 @@ class ServerList
 
         localStorage.setItem(this.localeStorageKey, server);
         localStorage.setItem(this.localeStorageDcKey, dc);
-        localStorage.setItem(this.localeStorageDcServersKey, this.dcToServers[dc].join(','));
+        localStorage.setItem(this.localeStorageDcServersKey, this.servers[dc].join(','));
 
         // select it in the server list
         this.ui.val(server);

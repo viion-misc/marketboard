@@ -16,6 +16,19 @@ if (window.location.hash) {
     localStorage.setItem(ServerList.localeStorageKey, preloadItem[0]);
 }
 
+// language
+let language = localStorage.getItem('language');
+if (language === null || language === '') {
+    language = 'en';
+}
+
+localStorage.setItem('language', language);
+
+$('.language button').on('click', event => {
+    localStorage.setItem('language', $(event.currentTarget).attr('id'));
+    location.reload();
+});
+
 
 // server dropdown list
 ServerList.setServerList();

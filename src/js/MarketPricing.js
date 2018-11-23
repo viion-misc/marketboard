@@ -201,12 +201,12 @@ class MarketPricing
         html.push('<table>');
         html.push(`
             <tr>
-                <th width="25%">Server</th>
-                <th width="5%">QTY</th>
-                <th>Max/Unit</th>
-                <th>Max Total</th>
-                <th>Min/Unit</th>
-                <th>Min Total</th>
+                <th class="sortable" width="25%">Server</th>
+                <th class="sortable" width="5%">QTY</th>
+                <th class="sortable">Max/Unit</th>
+                <th class="sortable">Max Total</th>
+                <th class="sortable">Min/Unit</th>
+                <th class="sortable">Min Total</th>
             </tr>
         `);
 
@@ -261,12 +261,12 @@ class MarketPricing
                 if (serverInfo.Quantity > 0) {
                     html.push(`
                         <tr id="price-per-server-${server}">
-                            <td class="title">${serverInfo.Server}</td>
-                            <td>${serverInfo.Quantity}</td>
-                            <td>${numeral(serverInfo.MaxPricePerUnit).format('0,0')}</td>
-                            <td class="price">${numeral(serverInfo.MaxPriceTotal).format('0,0')}</td>
-                            <td>${numeral(serverInfo.MinPricePerUnit).format('0,0')}</td>
-                            <td class="price">${numeral(serverInfo.MinPriceTotal).format('0,0')}</td>
+                            <td data-sort="${serverInfo.Server}" class="title">${serverInfo.Server}</td>
+                            <td data-sort="${serverInfo.Quantity}">${serverInfo.Quantity}</td>
+                            <td data-sort="${serverInfo.MaxPricePerUnit}">${numeral(serverInfo.MaxPricePerUnit).format('0,0')}</td>
+                            <td data-sort="${serverInfo.MaxPriceTotal}" class="price">${numeral(serverInfo.MaxPriceTotal).format('0,0')}</td>
+                            <td data-sort="${serverInfo.MinPricePerUnit}">${numeral(serverInfo.MinPricePerUnit).format('0,0')}</td>
+                            <td data-sort="${serverInfo.MinPriceTotal}"class="price">${numeral(serverInfo.MinPriceTotal).format('0,0')}</td>
                         </tr>
                     `);
                 } else {
@@ -319,6 +319,27 @@ class MarketPricing
                 this.uiServers.find(`#price-per-server-${expensiveId}`).addClass('expensive');
             }
         }
+
+        this.uiServers.find('.market-item-prices-dc').append('<div class="sort-info">Click on a column heading to sort the listings.</div>');
+
+        this.addSortableHeaders();
+    }
+
+    addSortableHeaders()
+    {
+        const getCellValue = (tr, idx) => tr.children[idx].dataset.sort;
+
+        const comparer = (idx, asc) => (a, b) => ((v1, v2) =>
+                v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+        )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
+
+        // do the work...
+        document.querySelectorAll('th.sortable').forEach(th => th.addEventListener('click', (() => {
+            const table = th.closest('table');
+            Array.from(table.querySelectorAll('tr:nth-child(n+2)'))
+                .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+                .forEach(tr => table.appendChild(tr) );
+        })));
     }
 
     renderHistory(itemId, callback)
@@ -457,6 +478,7 @@ class MarketPricing
                 }]
             },
             options: {
+                maintainAspectRatio: false,
                 animation: false,
                 tooltips: {
                     position: 'nearest',

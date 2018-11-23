@@ -5,9 +5,25 @@ import Icon from "./Icon";
 
 class WishList
 {
+    constructor()
+    {
+        this.html = $('html');
+        this.ui = $('.wishlist .items');
+        this.open = false;
+    }
     watch()
     {
-        $('html').on('click', '.wishlist-btn', event => {
+        this.html.on('click', '.wishlist button.toggle', event => {
+            this.open = true;
+            this.ui.toggleClass('open');
+        });
+
+        this.html.on('click', '.wishlist-btn', event => {
+            // close wishlist
+            this.open = false;
+            this.ui.removeClass('open');
+
+
             const data = $(event.currentTarget).attr('id').split(',');
 
             $('.home').removeClass('on');
@@ -28,21 +44,23 @@ class WishList
 
     render()
     {
-        const $ui = $('.wishlist');
         const wishlist = localStorage.getItem('wishlist');
 
         console.log(wishlist);
 
         if (wishlist === null || wishlist === '') {
-            $ui.html('<span>Wishlist</span>');
             return;
         }
 
-        $ui.html('');
+        this.ui.html('');
 
         XIVAPI.getItemList(wishlist, response => {
             response.Results.forEach((item, i) => {
-                $ui.append(`<button class="wishlist-btn" id="${item.ID},${item.ItemSearchCategory.ID}"><img src="${Icon.get(item.Icon)}"></button>`)
+                this.ui.append(`
+                    <button class="wishlist-btn" id="${item.ID},${item.ItemSearchCategory.ID}">
+                    <img src="${Icon.get(item.Icon)}"> ${item.Name}
+                    </button>
+                `);
             });
         })
 
