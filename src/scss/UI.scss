@@ -8,6 +8,7 @@ html {
     color: #ccc;
     font-size: 16px;
     text-shadow: 0 1px 2px #000;
+    min-width: 1000px;
 }
 a {
     color: #ffcafd;
@@ -337,6 +338,7 @@ section {
 
             &.mini {
                 flex: 0 1 70px;
+                min-width: 70px;
 
                 button div:nth-of-type(2) {
                     opacity: 0;
@@ -354,6 +356,7 @@ section {
             display: none;
             margin-left: 20px;
             border-radius: 10px;
+            min-width: 750px;
 
             &.on {
                 display: block;
@@ -898,8 +901,8 @@ select {
     box-shadow: 0 0 15px 5px #000;
     background-color: #222;
     width: 300px;
-    border-radius: 0 0 0 10px;
-    right: 0;
+    border-radius: 0 0 10px 10px;
+    left: 775px;
     text-align: right;
     padding: 0 0 10px 0;
 
@@ -908,6 +911,7 @@ select {
 
         &.open {
             display: block;
+            padding-top: 5px;
         }
     }
 
