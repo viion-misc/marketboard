@@ -40,6 +40,7 @@ class WishList
 
     render()
     {
+        this.ui.html('<div class="loading">loading</div>');
         const wishlist = localStorage.getItem('wishlist');
         if (wishlist === null || wishlist === '') {
             return;
@@ -71,10 +72,8 @@ class WishList
         let index = wishlist.indexOf(itemId);
 
         if (index > -1) {
-            console.log('remove');
             delete wishlist[index];
         } else {
-            console.log('add');
             wishlist.push(itemId);
         }
 
