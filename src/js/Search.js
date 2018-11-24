@@ -12,7 +12,7 @@ class Search
         this.home = $('.home');
 
         this.searchTimer = null;
-        this.searchTypeDelay = 500;
+        this.searchTypeDelay = 300;
         this.searchMinimumLength = 2;
         this.searchString = '';
     }

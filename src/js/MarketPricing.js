@@ -118,7 +118,7 @@ class MarketPricing
             html.push(`<div>`);
             html.push(`<h1 class="rarity-${item.Rarity}">${item.Name}</h1>`);
 
-            if (item.ClassJobCategory) {
+            if (item.ClassJobCategory.Name) {
                 html.push(`
                     <p>Item Level: ${item.LevelItem} - Level ${item.LevelEquip} ${item.ClassJobCategory.Name}</p>
                     <p>${item.ItemUICategory.Name} - ${item.ItemKind.Name}</p>
