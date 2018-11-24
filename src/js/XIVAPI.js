@@ -42,7 +42,7 @@ class XIVAPI
      */
     getItem(itemId, callback) {
         this.get(`/Item/${itemId}`, {
-            columns: 'ID,Name,Icon,ItemSearchCategory.ID,Rarity,ItemUICategory.Name,ItemKind.Name,LevelItem,LevelEquip,ClassJobCategory.Name'
+            columns: 'ID,Name,Icon,ItemSearchCategory.Name,ItemSearchCategory.ID,Rarity,ItemUICategory.Name,ItemKind.Name,LevelItem,LevelEquip,ClassJobCategory.Name'
         }, callback);
     }
 
