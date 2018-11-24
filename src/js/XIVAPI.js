@@ -41,7 +41,9 @@ class XIVAPI
      * Return information about an item
      */
     getItem(itemId, callback) {
-        this.get(`/Item/${itemId}`, {}, callback);
+        this.get(`/Item/${itemId}`, {
+            columns: 'ID,Name,Icon,ItemSearchCategory.ID,Rarity,ItemUICategory.Name,ItemKind.Name,LevelItem,LevelEquip,ClassJobCategory.Name'
+        }, callback);
     }
 
     getItemList(ids, callback) {
