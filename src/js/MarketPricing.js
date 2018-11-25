@@ -13,12 +13,18 @@ class MarketPricing
         this.uiHistory = $('.market-item-history');
         this.uiServers = $('.market-item-dc');
         this.pricePerDcTimeout = null;
+        this.active = false;
     }
 
     renderPrices(itemId, callback)
     {
+        if (this.active) {
+            return;
+        }
+
         const server = localStorage.getItem('server');
 
+        this.active = true;
         this.view.addClass('on');
         this.uiPrices.html('<div class="loading"><img src="http://xivapi.com/mb/loading.svg"></div>');
         this.uiServers.html('<button class="market-item-dc-btn">Show Cross World Prices</button>');
@@ -27,6 +33,7 @@ class MarketPricing
 
         clearTimeout(this.pricePerDcTimeout);
         XIVAPI.getItemPrices(itemId, server, response => {
+            this.active = false;
             this.uiPrices.html('<h2>Current Prices</h2>');
 
             let html = [];

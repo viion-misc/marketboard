@@ -8,16 +8,23 @@ class MarketCategoryStock
     {
         this.view = $('.market-category-stock-ui');
         this.ui = $('.market-category-stock');
+        this.active = false;
     }
 
     listCategoryStock(categoryId, callback)
     {
+        if (this.active) {
+            return;
+        }
+
         const server = localStorage.getItem('server');
 
         this.view.addClass('on');
         this.ui.html('<div class="loading"><img src="http://xivapi.com/mb/loading.svg"></div>');
+        this.active = true;
 
         XIVAPI.getCategoryListings(categoryId, server, response => {
+            this.active = false;
             this.ui.html('');
 
             if (response.Error) {
