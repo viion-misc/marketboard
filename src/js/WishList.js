@@ -43,7 +43,7 @@ class WishList
         this.ui.html('<div class="loading">loading</div>');
         const wishlist = localStorage.getItem('wishlist');
         if (wishlist === null || wishlist === '') {
-            this.ui.html('<p>No items in your wishlist</p>');
+            this.ui.html('<p style="text-align:center;">No items in your wishlist</p>');
             return;
         }
 
