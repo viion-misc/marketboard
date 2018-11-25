@@ -30,7 +30,7 @@ class MarketPricing
             this.uiPrices.html('<h2>Current Prices</h2>');
 
             let html = [];
-            html.push(`<tr><th width="1%">#</th><th width="25%">Total</th><th width="25%">Unit</th><th>QTY</th><th>HQ</th><th>Town</th></tr>`);
+            html.push(`<tr><th width="1%">#</th><th width="25%">Total</th><th width="25%">Unit</th><th>QTY</th><th>HQ</th><th width="25%">Retainer</th><th width="25%">Crafter</th></tr>`);
 
             let cheapest = -1;
             let cheapestId = 0;
@@ -50,6 +50,9 @@ class MarketPricing
                             <td align="right">
                                 <span>${price.RetainerName}</span>
                                 <img src="${Icon.get(price.Town.Icon)}">
+                            </td>
+                            <td>
+                                <span>${price.CraftSignature}</span>
                             </td>
                         </tr>
                     `);
