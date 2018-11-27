@@ -39,12 +39,11 @@ class MarketCategoryStock
             }
 
             // render stock
-            response.forEach((stock, i) => {
+            response.forEach((item, i) => {
                 this.ui.append(
-                    `<button id="${stock.Item.ID}" class="rarity-${stock.Item.Rarity}">
-                        <div><span><img src="http://xivapi.com/mb/loading.svg" class="lazy" data-src="${Icon.get(stock.Item.Icon)}"></span></div>
-                        <div>${stock.Item.Name}</div>
-                        <span>${stock.Quantity}</span> 
+                    `<button id="${item.ID}" class="rarity-${item.Rarity}">
+                        <div><span><img src="http://xivapi.com/mb/loading.svg" class="lazy" data-src="${Icon.get(item.Icon)}"></span></div>
+                        <div>${item.Name}</div>
                     </button>`
                 );
             });

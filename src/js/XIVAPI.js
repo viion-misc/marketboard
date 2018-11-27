@@ -71,7 +71,14 @@ class XIVAPI
      * Get category stock listing for a specific server
      */
     getCategoryListings(categoryId, server, callback) {
-        this.get(`/market/${server}/category/${categoryId}`, {}, callback);
+        this.get(`/search`, {
+            indexes: 'item',
+            filters: `ItemSearchCategory.ID=${categoryId}`,
+            limit: 500,
+            columns: 'ID,Icon,Name,Rarity',
+            sort_field: 'LevelItem',
+            sort_order: 'desc',
+        }, callback);
     }
 
     /**
