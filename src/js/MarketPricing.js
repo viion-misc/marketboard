@@ -80,12 +80,12 @@ class MarketPricing
 
             this.uiPrices.append(`<div class="market-item-prices-cheap">
                     <div>
-                        <strong>(MIN)</strong> #${cheapestId+1} &nbsp; 
+                        <strong>(MIN)</strong> #${cheapestId+1} &nbsp;
                         <img src="https://raw.githubusercontent.com/viion/marketboard/master/favicon.png" height="16">
                         <span>${numeral(cheapest).format('0,0')}</span>
                     </div>
                     <div>
-                        <strong>(MAX)</strong> #${expensiveId+1} &nbsp; 
+                        <strong>(MAX)</strong> #${expensiveId+1} &nbsp;
                         <img src="https://raw.githubusercontent.com/viion/marketboard/master/favicon.png" height="16">
                         <span>${numeral(expensive).format('0,0')}</span>
                     </div>
@@ -306,12 +306,12 @@ class MarketPricing
             this.uiServers.find('.market-item-prices-dc')
                 .append(`<div class="market-item-prices-cheap">
                     <div>
-                        <strong>(MIN)</strong> ${cheapestId} &nbsp; 
+                        <strong>(MIN)</strong> ${cheapestId} &nbsp;
                         <img src="https://raw.githubusercontent.com/viion/marketboard/master/favicon.png" height="16">
                         <span>${numeral(cheapest).format('0,0')} ${cheapestHq ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png">' : ''}</span>
                     </div>
                     <div>
-                        <strong>(MAX)</strong> ${expensiveId} &nbsp; 
+                        <strong>(MAX)</strong> ${expensiveId} &nbsp;
                         <img src="https://raw.githubusercontent.com/viion/marketboard/master/favicon.png" height="16">
                         <span>${numeral(expensive).format('0,0')} ${expensiveHq ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png">' : ''}</span>
                     </div>
@@ -427,7 +427,6 @@ class MarketPricing
 
             PriceTotalSalesKeys: [],
             PriceTotalSalesValues: [],
-            PricePerUnitSalesKeys: [],
             PricePerUnitSalesValues: [],
         };
 
@@ -463,10 +462,13 @@ class MarketPricing
             //
             // chart
             //
-            statistics.PriceTotalSalesKeys.push(moment.unix(price.PurchaseDate).format('Do MMM, HH:mm'));
+            const purchaseMoment = moment.unix(price.PurchaseDate)
+            statistics.PriceTotalSalesKeys.push(purchaseMoment.format('Do MMM, HH:mm'));
             statistics.PriceTotalSalesValues.push(price.PriceTotal);
-            statistics.PricePerUnitSalesKeys.push(moment.unix(price.PurchaseDate).format('Do MMM, HH:mm'));
-            statistics.PricePerUnitSalesValues.push(price.PricePerUnit);
+            statistics.PricePerUnitSalesValues.push({
+                t: purchaseMoment.toDate(),
+                y: price.PricePerUnit,
+            });
         });
 
         // calculate statistics
@@ -478,8 +480,8 @@ class MarketPricing
         new Chart(document.getElementById("price-history").getContext('2d'), {
             type: 'line',
             data: {
-                labels: statistics.PricePerUnitSalesKeys.reverse(),
                 datasets: [{
+                    cubicInterpolationMode: 'monotone',
                     label: 'Price Per Unit Sales',
                     data: statistics.PricePerUnitSalesValues.reverse(),
                     backgroundColor: 'rgba(80, 80, 80, 0.2)',
@@ -495,6 +497,12 @@ class MarketPricing
                     intersect: false
                 },
                 scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+                            tooltipFormat: 'Do MMM, HH:mm',
+                        },
+                    }],
                     yAxes: [{
                         gridLines: {
                             zeroLineColor: 'rgba(87,35,162,1)',
