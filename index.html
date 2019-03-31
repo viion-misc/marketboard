@@ -71,84 +71,59 @@
                     <div>
                         <h1>Welcome to MogBoard!</h1>
                         <p>
-                            MogBoard is a small one page site that provides real-time access to the
-                            FFXIV Market Board for any server<small>**</small>, any time. The page is fully open source and uses
-                            XIVAPI.com to interact with the Companion API.
+                            MogBoard is a small one page site that provides cached access to the
+                            FFXIV Market Board for any server<small>**</small>, any time.
+                            The page is fully open source and runs on XIVAPI.com
                         </p>
                         <p>
                             If you are interested in using Market Board information on your site, please have a look at the docs here:
                             <a href="https://xivapi.com/docs/Market" target="_blank">XIVAPI Market</a>.
-                            If you fancy messing with this page and hosting your own, you can find the source code here:
-                            <a href="https://github.com/viion/marketboard" target="_blank">Github: viion/marketboard</a>.
                         </p>
+
                         <hr>
 
                         <div class="beta">
-                            <h4>beta, beta, beta</h4>
-                            This site is heavily in beta right now, deciding on features, seeing what works.
-                            Things may go wonky from time to time! If you have an issue, please join the discord
-                            and shout at Vekien#3458 :D
+                            <h4>Alpha</h4>
+                            This site is a proof of concept. It was thrown together to test what is possible and
+                            get community feedback into what they expect from a Market Board site.
+                            <br><br>
+                            If you notice any weirdness, be sure to hop onto the Discord and message @Vekien#3458
                         </div>
+
+                        <hr>
+
+                        <div class="beta">
+                            <h4>MOGBOARD V2.0</h4>
+                            A new site has been built and is being beta tested by patreon and members of XIVAPI. This
+                            new site will be released just before the World Visit system at the end of April!
+                        </div>
+
+                        <hr>
 
                         <h3>Frequently Asked Questions</h3>
                         <p>
                             <strong>Why is my server not working?</strong><br>
-                            This is likely
-                            because the server is congested and not accepting new characters at this
-                            time. The site works by having a dedicated login to the Companion API
-                            to be able to query the market place on-demand. Once the server becomes
-                            unlocked, it will work automatically.
-                            <br><br>
-                            If you do have a *spare* account on a locked server, I would be very much
-                            interested in talking with you! Join the Discord and message an admin!
+                            I cannot create a character on congested servers at this time. You can
+                            check the server status <a href="https://xivapi.com/docs/Market#status">here</a>.
                         </p>
                         <p>
                             <strong>Why do items I've bought still show up?</strong><br>
-                            The companion
-                            app API takes some time to update and reflect what has been purchased, this
-                            can take a couple minutes. The API has a 15 second cache, so just refresh
-                            the listing after a few minutes.
+                            The site runs on a cache and the item may not have updated yet. In addition to this
+                            the official Companion App has a cache/delay for Purchases.
                         </p>
                         <p>
                             <strong>I see some differences in-game vs the site</strong><br>
-                            This can happen and unfortunately it is out of my control. All data comes from
-                            SE via the Companion App and when differences appear it is an issue on
-                            their end, this either could be a caching issue or some other bug. I am
-                            very interested in hearing about these so please post them on the Discord!
+                            This can happen, it is due to caching and how often the item updates. This system
+                            is being tweaked and will not be perfect.
                         </p>
                         <p>
                             <strong>How do I get the Market data for my own project?</strong><br>
-                            This whole site is open source, you can take it and do whatever you like with it.
+                            Use XIVAPI: <a href="https://xivapi.com/docs/Market">https://xivapi.com/docs/Market</a>
                             <br><br>
-                            If you're interested in the API you can view the documentation here:
-                            <a href="https://xivapi.com/docs/Market">https://xivapi.com/docs/Market</a> -
-                            you can also view the network traffic in your browsers Dev Tools to have a
-                            peak at how I'm using the API!
-                            <br><br>
-                            If you are just more keen to learn about the companion API and bypass
-                            XIVAPI completely, have a look at my <a href="https://github.com/viion/ffxiv-datamining/blob/master/docs/CompanionAppApi.md">Research doc on Github</a>.
+                            Please note: While I have opened source all my research into accessing the Companion API
+                            with your own account, abuse of using that will cause SE to issue you a permanent ban on your accounts.
+                            Do not risk it if you do not know what you're doing.
                         </p>
-                        <p>
-                            <strong>Do I need to download anything?</strong><br>
-                            No, everything is on demand, real-time, handled by us!
-                        </p>
-                        <p>
-                            <strong>Will you have ads?</strong><br>
-                            No.
-                        </p>
-
-                        <hr>
-
-                        <small>
-                            ** Unfortunately, due to server congestion; the following servers will not work:
-                            <ul>
-                                <li>[JP] Gungnir</li>
-                                <li>[JP] Bahamut</li>
-                                <li>[JP] Chocobo</li>
-                                <li>[JP] Mandragora</li>
-                                <li>[JP] Shinryu</li>
-                            </ul>
-                        </small>
 
                         <hr>
 

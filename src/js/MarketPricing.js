@@ -14,6 +14,49 @@ class MarketPricing
         this.uiServers = $('.market-item-dc');
         this.pricePerDcTimeout = null;
         this.active = false;
+
+        this.towns = {
+            "1": {
+                "ID": 1,
+                "Icon": "/i/060000/060881.png",
+                "Name_de": "Limsa Lominsa",
+                "Name_en": "Limsa Lominsa",
+                "Name_fr": "Limsa Lominsa",
+                "Name_ja": "リムサ・ロミンサ"
+            },
+            "2": {
+                "ID": 2,
+                "Icon": "/i/060000/060882.png",
+                "Name_de": "Gridania",
+                "Name_en": "Gridania",
+                "Name_fr": "Gridania",
+                "Name_ja": "グリダニア"
+            },
+            "3": {
+                "ID": 3,
+                "Icon": "/i/060000/060883.png",
+                "Name_de": "Ul'dah",
+                "Name_en": "Ul'dah",
+                "Name_fr": "Ul'dah",
+                "Name_ja": "ウルダハ"
+            },
+            "4": {
+                "ID": 4,
+                "Icon": "/i/060000/060884.png",
+                "Name_de": "Ishgard",
+                "Name_en": "Ishgard",
+                "Name_fr": "Ishgard",
+                "Name_ja": "イシュガルド"
+            },
+            "7": {
+                "ID": 7,
+                "Icon": "/i/060000/060885.png",
+                "Name_de": "Kugane",
+                "Name_en": "Kugane",
+                "Name_fr": "Kugane",
+                "Name_ja": "クガネ"
+            }
+        };
     }
 
     renderPrices(itemId, callback)
@@ -34,7 +77,10 @@ class MarketPricing
         clearTimeout(this.pricePerDcTimeout);
         XIVAPI.getItemPrices(itemId, server, response => {
             this.active = false;
-            this.uiPrices.html('<h2>Current Prices</h2>');
+
+            const updated = moment.unix(response.Updated).fromNow();
+            this.uiPrices.html(`<div class="price_updated">Prices last updated: ${updated} <br> (Prices and History update based on sale frequency)</div>`);
+            this.uiPrices.append('<h2>Current Prices</h2>');
 
             let html = [];
             html.push(`<tr><th width="1%">#</th><th width="25%">Total</th><th width="25%">Unit</th><th>QTY</th><th>HQ</th><th width="25%">Retainer</th><th width="25%">Crafter</th></tr>`);
@@ -56,7 +102,7 @@ class MarketPricing
                             <td align="center">${price.IsHQ ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png" class="hq">' : ''}</td>
                             <td align="right">
                                 <span>${price.RetainerName}</span>
-                                <img src="${Icon.get(price.Town.Icon)}">
+                                <img src="${Icon.get(this.towns[price.TownID].Icon)}">
                             </td>
                             <td>
                                 <span>${price.CraftSignature}</span>

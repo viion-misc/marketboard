@@ -993,3 +993,15 @@ select {
         }
     }
 }
+
+.price_updated {
+    display: block;
+    margin-bottom: 10px;
+    background-color: #111;
+    text-align: center;
+    padding: 10px;
+    line-height: 20px;
+    font-size: 13px;
+    color: #777;
+    border-radius: 8px;
+}
