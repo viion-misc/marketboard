@@ -28,23 +28,16 @@ class MarketCategoryStock
             this.ui.html('');
 
             if (response.Error) {
-                this.ui.html(`
-                    <div class="error">Sorry, at this time we do not support this server, this is likely
-                    due to the server being locked for new characters. If you have a spare account on <strong>${server}</strong>
-                    we would love to hear from you!<br><br>
-                    ${response.Debug.Note}
-                `);
-
+                this.ui.html(`<div class="error">Error: ${response.Debug.Note}</div>`);
                 return;
             }
 
             // render stock
-            response.forEach((stock, i) => {
+            response.Results.forEach((item, i) => {
                 this.ui.append(
-                    `<button id="${stock.Item.ID}" class="rarity-${stock.Item.Rarity}">
-                        <div><span><img src="http://xivapi.com/mb/loading.svg" class="lazy" data-src="${Icon.get(stock.Item.Icon)}"></span></div>
-                        <div>${stock.Item.Name}</div>
-                        <span>${stock.Quantity}</span> 
+                    `<button id="${item.ID}" class="rarity-${item.Rarity}">
+                        <div><span><img src="http://xivapi.com/mb/loading.svg" class="lazy" data-src="${Icon.get(item.Icon)}"></span></div>
+                        <div>(${item.LevelItem}) ${item.Name}</div>
                     </button>`
                 );
             });

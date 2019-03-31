@@ -4,8 +4,6 @@ class XIVAPI
         loading = true;
 
         queries = queries ? queries : {};
-        queries.key = 'f0ef8bd32a004f1daf0d53b1';
-        queries.tags = 'mogboard';
         queries.language = localStorage.getItem('language');
 
         let query = Object.keys(queries)
@@ -57,21 +55,38 @@ class XIVAPI
      * Get the current prices for an item on a specific server
      */
     getItemPrices(itemId, server, callback) {
-        this.get(`/market/${server}/items/${itemId}`, {}, callback);
+        const queries = {
+            columns: 'Prices,Updated',
+        };
+
+        this.get(`/market/${server}/item/${itemId}`, queries, callback);
     }
 
     /**
      * Get the current price history for an item on a specific server
      */
     getItemPriceHistory(itemId, server, callback) {
-        this.get(`/market/${server}/items/${itemId}/history`, {}, callback);
+        const queries = {
+            columns: 'History'
+        };
+
+        this.get(`/market/${server}/item/${itemId}`, queries, callback);
     }
 
     /**
      * Get category stock listing for a specific server
      */
     getCategoryListings(categoryId, server, callback) {
-        this.get(`/market/${server}/category/${categoryId}`, {}, callback);
+        const queries = {
+            indexes: 'item',
+            filters: `ItemSearchCategory.ID=${categoryId}`,
+            columns: 'ID,Name,Icon,Rarity,LevelItem',
+            limit: 1000,
+            sort_field: 'LevelItem',
+            sort_order: 'desc'
+        };
+
+        this.get(`/search`, queries, callback);
     }
 
     /**

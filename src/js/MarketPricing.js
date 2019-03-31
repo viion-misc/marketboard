@@ -14,6 +14,49 @@ class MarketPricing
         this.uiServers = $('.market-item-dc');
         this.pricePerDcTimeout = null;
         this.active = false;
+
+        this.towns = {
+            "1": {
+                "ID": 1,
+                "Icon": "/i/060000/060881.png",
+                "Name_de": "Limsa Lominsa",
+                "Name_en": "Limsa Lominsa",
+                "Name_fr": "Limsa Lominsa",
+                "Name_ja": "リムサ・ロミンサ"
+            },
+            "2": {
+                "ID": 2,
+                "Icon": "/i/060000/060882.png",
+                "Name_de": "Gridania",
+                "Name_en": "Gridania",
+                "Name_fr": "Gridania",
+                "Name_ja": "グリダニア"
+            },
+            "3": {
+                "ID": 3,
+                "Icon": "/i/060000/060883.png",
+                "Name_de": "Ul'dah",
+                "Name_en": "Ul'dah",
+                "Name_fr": "Ul'dah",
+                "Name_ja": "ウルダハ"
+            },
+            "4": {
+                "ID": 4,
+                "Icon": "/i/060000/060884.png",
+                "Name_de": "Ishgard",
+                "Name_en": "Ishgard",
+                "Name_fr": "Ishgard",
+                "Name_ja": "イシュガルド"
+            },
+            "7": {
+                "ID": 7,
+                "Icon": "/i/060000/060885.png",
+                "Name_de": "Kugane",
+                "Name_en": "Kugane",
+                "Name_fr": "Kugane",
+                "Name_ja": "クガネ"
+            }
+        };
     }
 
     renderPrices(itemId, callback)
@@ -34,7 +77,10 @@ class MarketPricing
         clearTimeout(this.pricePerDcTimeout);
         XIVAPI.getItemPrices(itemId, server, response => {
             this.active = false;
-            this.uiPrices.html('<h2>Current Prices</h2>');
+
+            const updated = moment.unix(response.Updated).fromNow();
+            this.uiPrices.html(`<div class="price_updated">Prices last updated: ${updated} <br> (Prices and History update based on sale frequency)</div>`);
+            this.uiPrices.append('<h2>Current Prices</h2>');
 
             let html = [];
             html.push(`<tr><th width="1%">#</th><th width="25%">Total</th><th width="25%">Unit</th><th>QTY</th><th>HQ</th><th width="25%">Retainer</th><th width="25%">Crafter</th></tr>`);
@@ -56,7 +102,7 @@ class MarketPricing
                             <td align="center">${price.IsHQ ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png" class="hq">' : ''}</td>
                             <td align="right">
                                 <span>${price.RetainerName}</span>
-                                <img src="${Icon.get(price.Town.Icon)}">
+                                <img src="${Icon.get(this.towns[price.TownID].Icon)}">
                             </td>
                             <td>
                                 <span>${price.CraftSignature}</span>
@@ -80,12 +126,12 @@ class MarketPricing
 
             this.uiPrices.append(`<div class="market-item-prices-cheap">
                     <div>
-                        <strong>(MIN)</strong> #${cheapestId+1} &nbsp; 
+                        <strong>(MIN)</strong> #${cheapestId+1} &nbsp;
                         <img src="https://raw.githubusercontent.com/viion/marketboard/master/favicon.png" height="16">
                         <span>${numeral(cheapest).format('0,0')}</span>
                     </div>
                     <div>
-                        <strong>(MAX)</strong> #${expensiveId+1} &nbsp; 
+                        <strong>(MAX)</strong> #${expensiveId+1} &nbsp;
                         <img src="https://raw.githubusercontent.com/viion/marketboard/master/favicon.png" height="16">
                         <span>${numeral(expensive).format('0,0')}</span>
                     </div>
@@ -306,12 +352,12 @@ class MarketPricing
             this.uiServers.find('.market-item-prices-dc')
                 .append(`<div class="market-item-prices-cheap">
                     <div>
-                        <strong>(MIN)</strong> ${cheapestId} &nbsp; 
+                        <strong>(MIN)</strong> ${cheapestId} &nbsp;
                         <img src="https://raw.githubusercontent.com/viion/marketboard/master/favicon.png" height="16">
                         <span>${numeral(cheapest).format('0,0')} ${cheapestHq ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png">' : ''}</span>
                     </div>
                     <div>
-                        <strong>(MAX)</strong> ${expensiveId} &nbsp; 
+                        <strong>(MAX)</strong> ${expensiveId} &nbsp;
                         <img src="https://raw.githubusercontent.com/viion/marketboard/master/favicon.png" height="16">
                         <span>${numeral(expensive).format('0,0')} ${expensiveHq ? '<img src="https://raw.githubusercontent.com/viion/marketboard/master/hq.png">' : ''}</span>
                     </div>
@@ -427,7 +473,6 @@ class MarketPricing
 
             PriceTotalSalesKeys: [],
             PriceTotalSalesValues: [],
-            PricePerUnitSalesKeys: [],
             PricePerUnitSalesValues: [],
         };
 
@@ -463,10 +508,13 @@ class MarketPricing
             //
             // chart
             //
-            statistics.PriceTotalSalesKeys.push(moment.unix(price.PurchaseDate).format('Do MMM, HH:mm'));
+            const purchaseMoment = moment.unix(price.PurchaseDate)
+            statistics.PriceTotalSalesKeys.push(purchaseMoment.format('Do MMM, HH:mm'));
             statistics.PriceTotalSalesValues.push(price.PriceTotal);
-            statistics.PricePerUnitSalesKeys.push(moment.unix(price.PurchaseDate).format('Do MMM, HH:mm'));
-            statistics.PricePerUnitSalesValues.push(price.PricePerUnit);
+            statistics.PricePerUnitSalesValues.push({
+                t: purchaseMoment.toDate(),
+                y: price.PricePerUnit,
+            });
         });
 
         // calculate statistics
@@ -478,8 +526,8 @@ class MarketPricing
         new Chart(document.getElementById("price-history").getContext('2d'), {
             type: 'line',
             data: {
-                labels: statistics.PricePerUnitSalesKeys.reverse(),
                 datasets: [{
+                    cubicInterpolationMode: 'monotone',
                     label: 'Price Per Unit Sales',
                     data: statistics.PricePerUnitSalesValues.reverse(),
                     backgroundColor: 'rgba(80, 80, 80, 0.2)',
@@ -495,6 +543,12 @@ class MarketPricing
                     intersect: false
                 },
                 scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+                            tooltipFormat: 'Do MMM, HH:mm',
+                        },
+                    }],
                     yAxes: [{
                         gridLines: {
                             zeroLineColor: 'rgba(87,35,162,1)',
